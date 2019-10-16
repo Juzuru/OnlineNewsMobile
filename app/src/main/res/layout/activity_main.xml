@@ -7,34 +7,14 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="#FFFFFF"/>
-
-        <HorizontalScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:id="@+id/horizontalScrollViewTab"
-            android:scrollbars="none">
-
-        </HorizontalScrollView>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="7.5dp"
-            android:layout_gravity="bottom"
-            android:id="@+id/relativeLayoutStripBottom"
-            android:background="@color/colorRed"/>
-    </FrameLayout>
+        android:layout_height="80dp"
+        android:orientation="vertical"
+        android:id="@+id/linearLayoutMain"/>
 
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/viewPagerNews"
-        android:background="#000000"/>
+        android:id="@+id/viewPagerNews"/>
 </LinearLayout>

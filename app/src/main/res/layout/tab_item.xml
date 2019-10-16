@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300px" android:layout_height="40dp"
-    android:text="a"
+    android:layout_width="match_parent" android:layout_height="35dp"
     android:textSize="15dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:textColor="#FFFFFF"
     android:gravity="center"
-    android:background="@drawable/round_top">
-
-</TextView>
+    android:layout_gravity="center"
+    android:background="@drawable/round_top"/>

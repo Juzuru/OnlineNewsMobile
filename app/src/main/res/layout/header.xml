@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="40dp"
+    android:id="@+id/relativeLayoutHeader">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="TIN HOT"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:textColor="#000000"
+        android:id="@+id/textViewNewspaper"/>
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/menu_icon"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/imageViewMenu"
+        android:onClick="clickToMenu"/>
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/open_book_icon"
+        android:layout_alignParentRight="true"
+        android:id="@+id/imageOpenBook"
+        android:layout_marginTop="7.5dp"
+        android:layout_marginRight="10dp" />
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/search_icon"
+        android:layout_marginTop="7.5dp"
+        android:layout_toLeftOf="@id/imageOpenBook"
+        android:layout_marginRight="10dp"
+        android:id="@+id/imageSearch"/>
+</RelativeLayout>

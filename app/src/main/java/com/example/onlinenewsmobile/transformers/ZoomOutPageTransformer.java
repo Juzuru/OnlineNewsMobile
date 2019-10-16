@@ -1,4 +1,4 @@
-package com.example.onlinenewsmobile.transformer;
+package com.example.onlinenewsmobile.transformers;
 
 import android.view.View;
 

@@ -1,25 +1,23 @@
 <resources>
     <string name="app_name">OnlineNewsMobile</string>
     <string-array name="color_hex_code">
-        <item>#FF0000</item>
+        <!--crimson, darkorange, limegreen, darkgreen, yellowgreen-->
+        <!--olive, darkturquoise, teal, dodgerblue, darkblue-->
+        <!--magenta, indigo, purple, mediumvioletred, maroon-->
+        <item>#DC143C</item>
         <item>#FF8C00</item>
-        <item>#FFD700</item>
         <item>#32CD32</item>
         <item>#006400</item>
         <item>#9ACD32</item>
-        <item>#00FF7F</item>
         <item>#808000</item>
         <item>#00CED1</item>
         <item>#008080</item>
         <item>#1E90FF</item>
-        <item>#0000FF</item>
-        <item>#7B68EE</item>
+        <item>#00008B</item>
         <item>#FF00FF</item>
         <item>#8A2BE2</item>
         <item>#800080</item>
-        <item>#FF1493</item>
         <item>#C71585</item>
-        <item>#CD853F</item>
         <item>#800000</item>
     </string-array>
 </resources>
