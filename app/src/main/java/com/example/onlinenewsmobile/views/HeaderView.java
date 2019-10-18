@@ -1,5 +1,6 @@
 package com.example.onlinenewsmobile.views;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.onlinenewsmobile.MainActivity;
+import com.example.onlinenewsmobile.MenuActivity;
 import com.example.onlinenewsmobile.R;
 
 public class HeaderView {
@@ -36,7 +38,7 @@ public class HeaderView {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Menu", Toast.LENGTH_SHORT).show();
+                context.startActivity(new Intent(context, MenuActivity.class));
             }
         };
     }

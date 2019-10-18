@@ -4,20 +4,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.onlinenewsmobile.MainActivity;
+import com.example.onlinenewsmobile.models.NewsDTO;
 import com.example.onlinenewsmobile.models.NewsTypeDTO;
 import com.example.onlinenewsmobile.views.ListNewsView;
+
+import java.util.ArrayList;
 
 public class ViewPagerAdapter extends PagerAdapter {
 
     private ListNewsView[] listViewNews;
 
-    public ViewPagerAdapter (MainActivity context, @NonNull NewsTypeDTO[] newsTypeDTOS) {
-        listViewNews = new ListNewsView[newsTypeDTOS.length];
-        for (int i = 0; i < newsTypeDTOS.length; i++) {
-            listViewNews[i] = new ListNewsView(context, newsTypeDTOS[i]);
+    public ViewPagerAdapter (AppCompatActivity context, int numberOfPage) {
+        listViewNews = new ListNewsView[numberOfPage];
+        for (int i = 0; i < numberOfPage; i++) {
+            listViewNews[i] = new ListNewsView(context, new ArrayList<NewsDTO>(0));
         }
     }
 
@@ -39,8 +43,6 @@ public class ViewPagerAdapter extends PagerAdapter {
             container.addView(listViewNews[position]);
         }
 
-        //listViewNews[position].initView();
-
         return listViewNews[position];
     }
 
@@ -49,7 +51,15 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     }
 
-    public ListNewsView getListViewNews(int position) {
-        return listViewNews[position];
+    public void addNews(ArrayList<NewsDTO> list, int position){
+        listViewNews[position].addNews(list);
+    }
+
+    public void addNews(NewsTypeDTO newsTypeDTO, int position) {
+        listViewNews[position].addNews(newsTypeDTO);
+    }
+
+    public boolean isPageInit(int position) {
+        return listViewNews[position].getCount() != 0;
     }
 }

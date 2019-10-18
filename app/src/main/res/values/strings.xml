@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">OnlineNewsMobile</string>
+
+    <string name="facebook_app_id">444374362862803</string>
+    <string name="fb_login_protocol_scheme">fb444374362862803</string>
+
     <string-array name="color_hex_code">
         <!--crimson, darkorange, limegreen, darkgreen, yellowgreen-->
         <!--olive, darkturquoise, teal, dodgerblue, darkblue-->

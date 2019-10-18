@@ -11,27 +11,24 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.onlinenewsmobile.MainActivity;
 import com.example.onlinenewsmobile.R;
 import com.example.onlinenewsmobile.models.NewsDTO;
-import com.example.onlinenewsmobile.models.NewsTypeDTO;
 
 import java.util.List;
 
 public class CustomArrayAdapter extends ArrayAdapter<NewsDTO> {
 
-    private MainActivity context;
-    private NewsTypeDTO newsTypeDTO;
+    private AppCompatActivity context;
     private int resource;
 
     private LayoutInflater inflater;
 
-    public CustomArrayAdapter(@NonNull MainActivity context, int resource, @NonNull List<NewsDTO> objects, NewsTypeDTO newsTypeDTO) {
+    public CustomArrayAdapter(@NonNull AppCompatActivity context, int resource, @NonNull List<NewsDTO> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
-        this.newsTypeDTO = newsTypeDTO;
         inflater = (LayoutInflater)context.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -46,10 +43,10 @@ public class CustomArrayAdapter extends ArrayAdapter<NewsDTO> {
             NewsDTO dto = getItem(position);
 
             TextView textView = convertView.findViewById(R.id.textViewNewsType);
-            textView.setText(newsTypeDTO == null ? dto.getNewsType() : newsTypeDTO.getName());
+            textView.setText(dto.getNewsType());
             textView.setOnClickListener(onNewsTypeClickListener());
 
-            ((TextView) convertView.findViewById(R.id.textViewNewspaper)).setText(newsTypeDTO == null ? dto.getNewspaper() : newsTypeDTO.getNewspaper());
+            ((TextView) convertView.findViewById(R.id.textViewNewspaper)).setText(dto.getNewspaper());
             ((TextView) convertView.findViewById(R.id.textViewTitle)).setText(dto.getTitle());
             ((ImageView) convertView.findViewById(R.id.imageViewNews)).setImageBitmap(dto.getImageBitmap());
             ((TextView) convertView.findViewById(R.id.textViewDescription)).setText(dto.getDescription());
