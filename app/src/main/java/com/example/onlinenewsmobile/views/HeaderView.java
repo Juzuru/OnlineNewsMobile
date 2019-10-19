@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.onlinenewsmobile.MenuActivity;
 import com.example.onlinenewsmobile.R;
+import com.example.onlinenewsmobile.views.search.SearchNewsActivity;
 
 public class HeaderView {
     private static final int SETTING_CHANGED = 210;
@@ -60,6 +61,8 @@ public class HeaderView {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(context, SearchNewsActivity.class);
+                context.startActivity(intent);
                 Toast.makeText(context, "Search", Toast.LENGTH_SHORT).show();
             }
         };
