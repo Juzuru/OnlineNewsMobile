@@ -25,7 +25,6 @@ public class NewsCustomArrayAdapter extends ArrayAdapter<NewsDTO> {
     private int horizontalResource;
 
     private LayoutInflater inflater;
-    private List<NewsDTO> list;
 
     private boolean isVertical = true;
 
@@ -34,7 +33,6 @@ public class NewsCustomArrayAdapter extends ArrayAdapter<NewsDTO> {
         this.context = context;
         this.verticalResource = verticalResource;
         this.horizontalResource = horizontalResource;
-        this.list = objects;
         inflater = (LayoutInflater)context.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 

@@ -39,6 +39,30 @@ public class CategoryDAO implements Serializable {
         return list;
     }
 
+    public ArrayList<CategoryDTO> getAllActive() {
+        ArrayList<CategoryDTO> list = new ArrayList<>();
+
+        SQLiteDatabase db = dbManager.getReadableDatabase();
+        Cursor cursor = db.query(DBManager.CATEGORY_TABLE_NAME,
+                new String[]{DBManager.CATEGORY_ID, DBManager.CATEGORY_NAME, DBManager.CATEGORY_VISIBLE},
+                DBManager.CATEGORY_VISIBLE + "=?",
+                new String[]{String.valueOf(true)},
+                null, null, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    list.add(new CategoryDTO(cursor.getInt(0),
+                            cursor.getString(1),
+                            Boolean.parseBoolean(cursor.getString(2))));
+                } while (cursor.moveToNext());
+            }
+        }
+
+        db.close();
+        return list;
+    }
+    
     public void seed() {
         SQLiteDatabase db = dbManager.getWritableDatabase();
 

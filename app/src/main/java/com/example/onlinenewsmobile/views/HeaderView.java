@@ -8,14 +8,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.onlinenewsmobile.MainActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.onlinenewsmobile.MenuActivity;
 import com.example.onlinenewsmobile.R;
 
 public class HeaderView {
-    private MainActivity context;
+    private static final int SETTING_CHANGED = 210;
 
-    public HeaderView(MainActivity context, boolean isDashboard, String headerNasme) {
+    private AppCompatActivity context;
+
+    public HeaderView(AppCompatActivity context, boolean isDashboard, String headerNasme) {
         this.context = context;
 
         LinearLayout linearLayout = context.findViewById(R.id.linearLayoutMain);
@@ -38,7 +41,8 @@ public class HeaderView {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, MenuActivity.class));
+
+                context.startActivityForResult(new Intent(context, MenuActivity.class), SETTING_CHANGED);
             }
         };
     }

@@ -27,6 +27,7 @@ public class RssService {
 
         public RssReader(NewsCustomArrayAdapter newsCustomArrayAdapter) {
             this.adapter = newsCustomArrayAdapter;
+            this.list = list;
         }
 
         @Override

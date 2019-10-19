@@ -26,7 +26,6 @@ public class CategoryCustomAdapter extends BaseAdapter {
     private ArrayList<CategoryDTO> list;
 
     private LayoutInflater inflater;
-    private boolean isChanged = false;
 
     public CategoryCustomAdapter(AppCompatActivity context, int resource, @NonNull ArrayList<CategoryDTO> list, Button buttonSave) {
         this.resource = resource;
@@ -66,10 +65,10 @@ public class CategoryCustomAdapter extends BaseAdapter {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     list.get(position).setVisible(isChecked);
-                    if (!isChanged) {
+                    if (!buttonSave.isActivated()) {
                         buttonSave.setBackgroundResource(R.color.colorDodgerblue);
                         buttonSave.setTextColor(Color.parseColor("#FFFFFF"));
-                        isChanged = !isChanged;
+                        buttonSave.setActivated(true);
                     }
                 }
             });
