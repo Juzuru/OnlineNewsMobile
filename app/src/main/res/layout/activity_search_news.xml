@@ -7,6 +7,10 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
     android:id="@+id/search_activity_layout"
+    android:clickable="true"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".views.search.SearchNewsActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

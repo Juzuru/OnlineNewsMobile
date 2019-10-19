@@ -1,24 +1,23 @@
 package com.example.onlinenewsmobile.models.KA;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 public class SearchNewsDTO implements Serializable {
     private long id;
     private String title;
-    private LocalDateTime timer;
+    private String postedTime;
     private String newspaper;
-    private String imgTitle;
+    private String image;
 
     public SearchNewsDTO() {
     }
 
-    public SearchNewsDTO(long id, String title, LocalDateTime timer, String newspaper, String imgTitle) {
+    public SearchNewsDTO(long id, String title, String timer, String newspaper, String imgTitle) {
         this.id = id;
         this.title = title;
-        this.timer = timer;
+        this.postedTime = timer;
         this.newspaper = newspaper;
-        this.imgTitle = imgTitle;
+        this.image = imgTitle;
     }
 
     public long getId() {
@@ -37,12 +36,12 @@ public class SearchNewsDTO implements Serializable {
         this.title = title;
     }
 
-    public LocalDateTime getTimer() {
-        return timer;
+    public String getPostedTime() {
+        return postedTime;
     }
 
-    public void setTimer(LocalDateTime timer) {
-        this.timer = timer;
+    public void setPostedTime(String postedTime) {
+        this.postedTime = postedTime;
     }
 
     public String getNewspaper() {
@@ -53,11 +52,11 @@ public class SearchNewsDTO implements Serializable {
         this.newspaper = newspaper;
     }
 
-    public String getImgTitle() {
-        return imgTitle;
+    public String getImage() {
+        return image;
     }
 
-    public void setImgTitle(String imgTitle) {
-        this.imgTitle = imgTitle;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

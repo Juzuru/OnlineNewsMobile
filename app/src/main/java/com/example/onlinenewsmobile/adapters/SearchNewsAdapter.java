@@ -12,9 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinenewsmobile.R;
 import com.example.onlinenewsmobile.models.KA.SearchNewsDTO;
+import com.squareup.picasso.Picasso;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -40,9 +41,10 @@ public class SearchNewsAdapter extends RecyclerView.Adapter<SearchNewsAdapter.Ne
         holder.imgTitle.setImageResource(R.drawable.bookmark_icon);
         holder.txtNewspaper.setText(searchNewsDTO.getNewspaper());
         holder.txtTitle.setText(searchNewsDTO.getTitle());
+        Picasso.get().load(searchNewsDTO.getImage()).into(holder.imgTitle);
         LocalDateTime current = LocalDateTime.now();
-        LocalDateTime postedTime = searchNewsDTO.getTimer();
-
+        LocalDateTime postedTime = LocalDateTime.parse(searchNewsDTO.getPostedTime(), DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+//
 //        LocalDateTime postedTime = current.minusDays(1);
         long hours = postedTime.until( current, ChronoUnit.HOURS);
 
@@ -66,7 +68,7 @@ public class SearchNewsAdapter extends RecyclerView.Adapter<SearchNewsAdapter.Ne
             txtTitle = itemView.findViewById(R.id.txtTitle);
             txtTimer = itemView.findViewById(R.id.txtTimer);
             txtNewspaper = itemView.findViewById(R.id.txtNewPaper);
-            imgTitle = itemView.findViewById(R.id.imgTitle);
+            imgTitle = itemView.findViewById(R.id.image);
         }
     }
 }
