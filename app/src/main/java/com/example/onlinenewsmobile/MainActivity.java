@@ -12,6 +12,8 @@ import com.example.onlinenewsmobile.transformers.ZoomOutPageTransformer;
 import com.example.onlinenewsmobile.views.HeaderView;
 import com.example.onlinenewsmobile.views.TabView;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         list.add(new NewsTypeDTO("Bong da", "Dan tri", ""));
         list.add(new NewsTypeDTO("Bong da", "Dan tri", ""));
         list.add(new NewsTypeDTO("Bong da", "Dan tri", ""));
+
+
 
         CategoryDAO categoryDAO = new CategoryDAO(this);
         if (categoryDAO.getAll().size() == 0) {

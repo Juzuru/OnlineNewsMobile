@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorGray">#B4B4B4</color>
-
+    <color name="colorWhite">#FFFFFF</color>
     <color name="colorOrimson">#DC143C</color>
     <color name="colorDarkorange">#FF8C00</color>
     <color name="colorLimegreenn">#32CD32</color>
