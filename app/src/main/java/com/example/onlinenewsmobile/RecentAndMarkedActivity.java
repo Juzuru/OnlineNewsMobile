@@ -4,14 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.onlinenewsmobile.adapter.ViewPagerAdapter;
+import com.example.onlinenewsmobile.adapters.ViewPagerAdapter;
 
 public class RecentAndMarkedActivity extends AppCompatActivity {
 

@@ -5,7 +5,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
-import com.example.onlinenewsmobile.adapter.ViewPagerAdapter;
+import com.example.onlinenewsmobile.adapters.ViewPagerAdapter;
+import com.example.onlinenewsmobile.daos.CategoryDAO;
 import com.example.onlinenewsmobile.models.NewsTypeDTO;
 import com.example.onlinenewsmobile.transformers.ZoomOutPageTransformer;
 import com.example.onlinenewsmobile.views.HeaderView;
@@ -15,10 +16,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String HEADER_NAME = "TIN HOT";
-
-    private String[] tabNames = new String[]{"Bong da", "Thoi su", "Thoi trang", "thoi tiet",
-            "Bong da", "Thoi su", "Thoi trang", "thoi tiet"};
+    private static final String HEADER_NAME = "NEWS";
 
     public ViewPager viewPager;
     private ViewPagerAdapter viewPagerAdapter;
@@ -30,18 +28,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        list.add(new NewsTypeDTO("Bong da", "Dan tri", ""));
+        list.add(new NewsTypeDTO("Bong da", "Dan tri", ""));
+        list.add(new NewsTypeDTO("Bong da", "Dan tri", ""));
+        list.add(new NewsTypeDTO("Bong da", "Dan tri", ""));
+        list.add(new NewsTypeDTO("Bong da", "Dan tri", ""));
+        list.add(new NewsTypeDTO("Bong da", "Dan tri", ""));
+        list.add(new NewsTypeDTO("Bong da", "Dan tri", ""));
+        list.add(new NewsTypeDTO("Bong da", "Dan tri", ""));
 
-        list.add(new NewsTypeDTO("Bong da", "Dan tri", ""));
-        list.add(new NewsTypeDTO("Bong da", "Dan tri", ""));
-        list.add(new NewsTypeDTO("Bong da", "Dan tri", ""));
-        list.add(new NewsTypeDTO("Bong da", "Dan tri", ""));
-        list.add(new NewsTypeDTO("Bong da", "Dan tri", ""));
-        list.add(new NewsTypeDTO("Bong da", "Dan tri", ""));
-        list.add(new NewsTypeDTO("Bong da", "Dan tri", ""));
-        list.add(new NewsTypeDTO("Bong da", "Dan tri", ""));
+        CategoryDAO categoryDAO = new CategoryDAO(this);
+        if (categoryDAO.getAll().size() == 0) {
+            categoryDAO.seed();
+        }
+
 
         new HeaderView(this, true, HEADER_NAME);
-        tabView = new TabView(this, tabNames);
+        tabView = new TabView(this, categoryDAO.getAll());
 
         setupViewPager(8);
         initPagerView(0);

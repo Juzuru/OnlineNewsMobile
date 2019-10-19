@@ -75,8 +75,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/open_book_icon" />
+        android:scaleType="centerCrop" />
 
     <TextView
         android:layout_width="match_parent"

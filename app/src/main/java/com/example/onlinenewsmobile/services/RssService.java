@@ -2,7 +2,7 @@ package com.example.onlinenewsmobile.services;
 
 import android.os.AsyncTask;
 
-import com.example.onlinenewsmobile.adapter.CustomArrayAdapter;
+import com.example.onlinenewsmobile.adapters.NewsCustomArrayAdapter;
 import com.example.onlinenewsmobile.models.NewsDTO;
 import com.example.onlinenewsmobile.models.NewsTypeDTO;
 
@@ -15,18 +15,18 @@ import java.util.ArrayList;
 public class RssService {
     private NewsTypeDTO newsTypeDTO;
 
-    public void addNews(CustomArrayAdapter customArrayAdapter, NewsTypeDTO newsTypeDTO) {
+    public void addNews(NewsCustomArrayAdapter newsCustomArrayAdapter, NewsTypeDTO newsTypeDTO) {
         this.newsTypeDTO = newsTypeDTO;
-        new RssReader(customArrayAdapter).execute(newsTypeDTO.getRssLink());
+        new RssReader(newsCustomArrayAdapter).execute(newsTypeDTO.getRssLink());
     }
 
     private class RssReader extends AsyncTask<String, Void, Void> {
 
-        private CustomArrayAdapter adapter;
+        private NewsCustomArrayAdapter adapter;
         private ArrayList<NewsDTO> list;
 
-        public RssReader(CustomArrayAdapter customArrayAdapter) {
-            this.adapter = customArrayAdapter;
+        public RssReader(NewsCustomArrayAdapter newsCustomArrayAdapter) {
+            this.adapter = newsCustomArrayAdapter;
         }
 
         @Override

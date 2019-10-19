@@ -1,4 +1,4 @@
-package com.example.onlinenewsmobile.adapter;
+package com.example.onlinenewsmobile.adapters;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 
-import com.example.onlinenewsmobile.MainActivity;
 import com.example.onlinenewsmobile.models.NewsDTO;
 import com.example.onlinenewsmobile.models.NewsTypeDTO;
 import com.example.onlinenewsmobile.views.ListNewsView;
@@ -15,6 +14,9 @@ import com.example.onlinenewsmobile.views.ListNewsView;
 import java.util.ArrayList;
 
 public class ViewPagerAdapter extends PagerAdapter {
+
+    public static final boolean VERTICAL = true;
+    public static final boolean HORIZONTAL = false;
 
     private ListNewsView[] listViewNews;
 
@@ -61,5 +63,11 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     public boolean isPageInit(int position) {
         return listViewNews[position].getCount() != 0;
+    }
+
+    public void setOrientation(boolean orientation) {
+        for (int i = 0; i < listViewNews.length; i++) {
+            listViewNews[i].setOrientation(orientation);
+        }
     }
 }

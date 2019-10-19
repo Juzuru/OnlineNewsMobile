@@ -15,6 +15,9 @@ import android.widget.TextView;
 
 import com.example.onlinenewsmobile.MainActivity;
 import com.example.onlinenewsmobile.R;
+import com.example.onlinenewsmobile.models.CategoryDTO;
+
+import java.util.ArrayList;
 
 public class TabView {
 
@@ -31,14 +34,14 @@ public class TabView {
 
     private boolean isTabTouch = false;
 
-    public TabView(MainActivity context, String[] newsTypes) {
+    public TabView(MainActivity context, ArrayList<CategoryDTO> categories) {
         this.context = context;
         Resources resources = context.getResources();
         colors = resources.getStringArray(R.array.color_hex_code);
         deviceWidth = resources.getDisplayMetrics().widthPixels;
 
         initView();
-        setupTab(newsTypes);
+        setupTab(categories);
     }
 
     private void initView() {
@@ -51,12 +54,12 @@ public class TabView {
 
     }
 
-    private void setupTab(String[] newsTypes) {
+    private void setupTab(ArrayList<CategoryDTO> categories) {
         LayoutInflater inflater = (LayoutInflater)context.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         TextView textView = (TextView) inflater.inflate(R.layout.tab_item, linearLayout, false);
         ((GradientDrawable) textView.getBackground()).setColor(Color.parseColor(colors[0]));
-        textView.setText(newsTypes[0]);
+        textView.setText(categories.get(0).getName());
         textView.setOnClickListener(onClickListener(0));
 
         previousTab = textView;
@@ -65,14 +68,16 @@ public class TabView {
         previousTab.setLayoutParams(layoutParams);
         linearLayout.addView(previousTab);
 
-        for (int i = 1, j = 1; i < colors.length && j < newsTypes.length; i++, j++) {
-            textView = (TextView) inflater.inflate(R.layout.tab_item, linearLayout, false);
-            ((GradientDrawable) textView.getBackground()).setColor(Color.parseColor(colors[i]));
-            textView.setText(newsTypes[j]);
-            textView.setOnClickListener(onClickListener(i));
-            linearLayout.addView(textView);
+        for (int i = 1, j = 1; i < colors.length && j < categories.size(); i++, j++) {
+            if (categories.get(i).isVisible()) {
+                textView = (TextView) inflater.inflate(R.layout.tab_item, linearLayout, false);
+                ((GradientDrawable) textView.getBackground()).setColor(Color.parseColor(colors[i]));
+                textView.setText(categories.get(i).getName());
+                textView.setOnClickListener(onClickListener(i));
+                linearLayout.addView(textView);
 
-            if (j == colors.length - 1) i = -1;
+                if (j == colors.length - 1) i = -1;
+            }
         }
     }
 

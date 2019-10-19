@@ -1,4 +1,4 @@
-package com.example.onlinenewsmobile.adapter;
+package com.example.onlinenewsmobile.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -18,17 +18,23 @@ import com.example.onlinenewsmobile.models.NewsDTO;
 
 import java.util.List;
 
-public class CustomArrayAdapter extends ArrayAdapter<NewsDTO> {
+public class NewsCustomArrayAdapter extends ArrayAdapter<NewsDTO> {
 
     private AppCompatActivity context;
-    private int resource;
+    private int verticalResource;
+    private int horizontalResource;
 
     private LayoutInflater inflater;
+    private List<NewsDTO> list;
 
-    public CustomArrayAdapter(@NonNull AppCompatActivity context, int resource, @NonNull List<NewsDTO> objects) {
-        super(context, resource, objects);
+    private boolean isVertical = true;
+
+    public NewsCustomArrayAdapter(@NonNull AppCompatActivity context, int verticalResource, int horizontalResource, @NonNull List<NewsDTO> objects) {
+        super(context, verticalResource, objects);
         this.context = context;
-        this.resource = resource;
+        this.verticalResource = verticalResource;
+        this.horizontalResource = horizontalResource;
+        this.list = objects;
         inflater = (LayoutInflater)context.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -36,7 +42,11 @@ public class CustomArrayAdapter extends ArrayAdapter<NewsDTO> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            convertView = inflater.inflate(resource, parent, false);
+            convertView = inflater.inflate(isVertical ? verticalResource : horizontalResource, parent, false);
+        } else if (convertView.findViewById(R.id.textViewDescription) == null && isVertical) {
+            convertView = inflater.inflate(verticalResource, parent, false);
+        } else if (convertView.findViewById(R.id.textViewDescription) != null && !isVertical) {
+            convertView = inflater.inflate(horizontalResource, parent, false);
         }
 
         try {
@@ -46,10 +56,15 @@ public class CustomArrayAdapter extends ArrayAdapter<NewsDTO> {
             textView.setText(dto.getNewsType());
             textView.setOnClickListener(onNewsTypeClickListener());
 
-            ((TextView) convertView.findViewById(R.id.textViewNewspaper)).setText(dto.getNewspaper());
+            textView = convertView.findViewById(R.id.textViewNewspaper);
+            textView.setText(dto.getNewspaper());
+            textView.setOnClickListener(onNewspaperClickListener());
+
             ((TextView) convertView.findViewById(R.id.textViewTitle)).setText(dto.getTitle());
             ((ImageView) convertView.findViewById(R.id.imageViewNews)).setImageBitmap(dto.getImageBitmap());
-            ((TextView) convertView.findViewById(R.id.textViewDescription)).setText(dto.getDescription());
+            if (isVertical) {
+                ((TextView) convertView.findViewById(R.id.textViewDescription)).setText(dto.getDescription());
+            }
             ImageView imageView = convertView.findViewById(R.id.imageViewBookMark);
 
             imageView.setOnClickListener(onBookMarkClickListener());
@@ -95,5 +110,9 @@ public class CustomArrayAdapter extends ArrayAdapter<NewsDTO> {
                 Toast.makeText(context, "Newspaper click", Toast.LENGTH_SHORT).show();
             }
         };
+    }
+
+    public void setOrientation(boolean orientation) {
+        isVertical = orientation;
     }
 }
