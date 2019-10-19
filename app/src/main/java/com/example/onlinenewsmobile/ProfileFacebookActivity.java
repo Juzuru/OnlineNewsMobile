@@ -84,12 +84,11 @@ public class ProfileFacebookActivity extends AppCompatActivity {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
                 try {
-                    String first_name = object.getString("first_name");
-                    String last_name = object.getString("last_name");
+                    String name = object.getString("name");
                     String id = object.getString("id");
                     String imageLink = "https://graph.facebook.com/" + id + "/pictures?type=normal";
 
-                    new UserProfile().execute(first_name, last_name, id, imageLink);
+                    new UserProfile().execute(name, id, imageLink);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -97,18 +96,17 @@ public class ProfileFacebookActivity extends AppCompatActivity {
         });
 
         Bundle parameter = new Bundle();
-        parameter.putString("fields", "first_name,last_name,id");
+        parameter.putString("fields", "id,name");
         graphRequest.setParameters(parameter);
         graphRequest.executeAsync();
     }
 
     private class UserProfile extends AsyncTask<String, Void, Bitmap> {
-        private String first_name, last_name, id;
+        private String name, id;
 
         @Override
         protected Bitmap doInBackground(String... strings) {
-            this.first_name = strings[0];
-            this.last_name = strings[1];
+            this.name = strings[0];
             this.id = strings[2];
             return HttpRequestService.getImageBitmap(strings[3]);
         }
@@ -116,8 +114,7 @@ public class ProfileFacebookActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             Intent intent = new Intent();
-            intent.putExtra("first_name", first_name);
-            intent.putExtra("last_name", last_name);
+            intent.putExtra("name", name);
             intent.putExtra("id", id);
             intent.putExtra("image", bitmap);
             setResult(LOGIN_SUCCESS, intent);

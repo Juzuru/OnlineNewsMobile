@@ -5,6 +5,7 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:textColor="#FFFFFF"
+    android:textStyle="bold"
     android:gravity="center"
     android:layout_gravity="center"
     android:background="@drawable/round_top"/>

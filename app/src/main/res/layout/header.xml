@@ -14,30 +14,32 @@
         android:id="@+id/textViewNewspaper"/>
 
     <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/menu_icon"
         android:layout_alignParentLeft="true"
         android:id="@+id/imageViewMenu"
-        android:onClick="clickToMenu"/>
+        android:onClick="clickToMenu"
+        android:scaleX="0.5"
+        android:scaleY="0.5"/>
 
     <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/open_book_icon"
         android:layout_alignParentRight="true"
         android:id="@+id/imageOpenBook"
-        android:layout_marginTop="7.5dp"
+        android:scaleX="0.625"
+        android:scaleY="0.625"
         android:layout_marginRight="10dp" />
 
     <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/search_icon"
-        android:layout_marginTop="7.5dp"
         android:layout_toLeftOf="@id/imageOpenBook"
         android:layout_marginRight="10dp"
-        android:id="@+id/imageSearch"/>
+        android:id="@+id/imageSearch"
+        android:scaleX="0.625"
+        android:scaleY="0.625"/>
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.example.onlinenewsmobile.views;
 
+import android.graphics.Color;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -15,12 +16,16 @@ import java.util.ArrayList;
 
 public class ListNewsView extends ListView {
 
-    private NewsCustomArrayAdapter adapter;
+    public NewsCustomArrayAdapter adapter;
+    public ArrayList<NewsDTO> list;
 
-    public ListNewsView(AppCompatActivity context, @NonNull ArrayList<NewsDTO> list) {
+    public ListNewsView(AppCompatActivity context, @NonNull ArrayList<NewsDTO> list, String color) {
         super(context);
-        adapter = new NewsCustomArrayAdapter(context, R.layout.news_item_large, R.layout.news_item_small, list);
+        this.list = list;
+        adapter = new NewsCustomArrayAdapter(context, R.layout.news_item_large, R.layout.news_item_small, this.list);
         this.setAdapter(adapter);
+        this.setId(R.id.list_view_news);
+        this.setBackgroundColor(Color.parseColor(color));
     }
 
     public void addNews(@NonNull ArrayList<NewsDTO> list) {
@@ -29,6 +34,10 @@ public class ListNewsView extends ListView {
 
     public void addNews(NewsTypeDTO newsTypeDTO) {
         new RssService().addNews(adapter, newsTypeDTO);
+    }
+
+    public void removeAll() {
+        adapter.clear();
     }
 
     @Override

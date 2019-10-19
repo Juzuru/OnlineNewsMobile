@@ -2,6 +2,7 @@ package com.example.onlinenewsmobile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -14,8 +15,12 @@ import com.example.onlinenewsmobile.models.CategoryDTO;
 
 public class CategoryActivity extends AppCompatActivity {
 
+    private static final int SETTING_CHANGED = 210;
+    private boolean isChanged = false;
+    private int activeCategories;
+
     private ListView listView;
-    CategoryCustomAdapter adapter;
+    private  CategoryCustomAdapter adapter;
 
     private Button buttonSave;
 
@@ -32,17 +37,37 @@ public class CategoryActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
-    public void clickToBack(View view) {
+    @Override
+    public void onBackPressed() {
+        if (isChanged) {
+            Intent intent = getIntent();
+            intent.putExtra("category", true);
+            intent.putExtra("activeCategories", activeCategories);
+            setResult(SETTING_CHANGED, intent);
+        }
         finish();
     }
 
-    public void clickToSaveChanges(View view) {
-        CategoryDAO dao = new CategoryDAO(this);
+    public void clickToBack(View view) {
+        onBackPressed();
+    }
 
-        for (int i = 0; i < adapter.getCount(); i++) {
-            dao.update((CategoryDTO) adapter.getItem(i));
+    public void clickToSaveChanges(View view) {
+        if (buttonSave.isActivated()) {
+            activeCategories = 0;
+            CategoryDAO dao = new CategoryDAO(this);
+
+            for (int i = 0; i < adapter.getCount(); i++) {
+                CategoryDTO dto = (CategoryDTO) adapter.getItem(i);
+                dao.update(dto);
+
+                if (dto.isVisible())
+                    activeCategories++;
+            }
+            buttonSave.setBackgroundResource(R.color.colorGray);
+            buttonSave.setTextColor(Color.parseColor("#000000"));
+            buttonSave.setActivated(false);
+            isChanged = true;
         }
-        buttonSave.setBackgroundResource(R.color.colorGray);
-        buttonSave.setTextColor(Color.parseColor("#000000"));
     }
 }
