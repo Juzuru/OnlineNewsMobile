@@ -16,28 +16,33 @@
             android:layout_height="150dp"
             android:layout_marginTop="200dp"
             android:src="@drawable/open_book_icon"
-            android:layout_gravity="center" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Login Facebook"
-            android:onClick="clickToLogin"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="40dp"
-            android:textSize="25dp"/>
+            android:id="@+id/faceBookImage"/>
     </LinearLayout>
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
+    <Button
+        android:id="@+id/btAcept"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="200dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:textSize="22dp"
-        android:paddingBottom="10dp"
-        android:layout_alignParentBottom="true"/>
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="310dp"
+        android:layout_marginHorizontal="80dp"
+        android:textSize="18dp"
+        android:textColor="#FFFFFF"
+        android:background="@color/colorFaceBook"
+        android:layout_alignParentBottom="true"
+        android:onClick="clickToAcept"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="250dp"
+        android:layout_marginHorizontal="120dp"
+        android:textSize="18dp"
+        android:text="Cancel"
+        android:textColor="#000000"
+        android:background="@color/colorGray"
+        android:layout_alignParentBottom="true"
+        android:onClick="clickToCancel"/>
 </RelativeLayout>

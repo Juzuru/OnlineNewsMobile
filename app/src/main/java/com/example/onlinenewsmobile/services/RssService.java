@@ -82,7 +82,7 @@ public class RssService {
                     "<link>https://www.24h.com.vn/upload/rss/dulich24h.rss</link>" +
                     "</channel>" +
                     "</rss>";
-            Document document = XMLService.parse(content);
+            Document document = DocumentService.parseXml(content);
 
             list = new ArrayList<>();
             NewsDTO dto;
@@ -129,7 +129,7 @@ public class RssService {
             }
 
             for (int i = 0; i < list.size(); i++) {
-                list.get(i).setImageBitmap(HttpRequestService.getImageBitmap(list.get(i).getImageLink()));
+                //list.get(i).setImageBitmap(HttpRequestService.getImageBitmap(list.get(i).getImageLink()));
             }
 
             return null;

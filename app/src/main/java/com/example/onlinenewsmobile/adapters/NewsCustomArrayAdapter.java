@@ -1,6 +1,7 @@
 package com.example.onlinenewsmobile.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.onlinenewsmobile.NewsDetailActivity;
 import com.example.onlinenewsmobile.R;
 import com.example.onlinenewsmobile.models.NewsDTO;
 
@@ -59,14 +61,14 @@ public class NewsCustomArrayAdapter extends ArrayAdapter<NewsDTO> {
             textView.setOnClickListener(onNewspaperClickListener());
 
             ((TextView) convertView.findViewById(R.id.textViewTitle)).setText(dto.getTitle());
-            ((ImageView) convertView.findViewById(R.id.imageViewNews)).setImageBitmap(dto.getImageBitmap());
+            //((ImageView) convertView.findViewById(R.id.imageViewNews)).setImageBitmap(dto.getImageBitmap());
             if (isVertical) {
                 ((TextView) convertView.findViewById(R.id.textViewDescription)).setText(dto.getDescription());
             }
             ImageView imageView = convertView.findViewById(R.id.imageViewBookMark);
 
             imageView.setOnClickListener(onBookMarkClickListener());
-            convertView.setOnClickListener(onNewsClickListener());
+            convertView.setOnClickListener(onNewsClickListener(dto));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -74,11 +76,14 @@ public class NewsCustomArrayAdapter extends ArrayAdapter<NewsDTO> {
         return convertView;
     }
 
-    private View.OnClickListener onNewsClickListener() {
+    private View.OnClickListener onNewsClickListener(final NewsDTO dto) {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "News Clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, NewsDetailActivity.class);
+                intent.putExtra("newTypeName", dto.getNewsType());
+                intent.putExtra("link", dto.getLink());
+                context.startActivity(intent);
             }
         };
     }
