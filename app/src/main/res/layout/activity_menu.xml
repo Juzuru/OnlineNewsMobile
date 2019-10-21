@@ -37,7 +37,7 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginTop="50dp"
-        android:src="@drawable/open_book_icon"
+        android:src="@drawable/facebook_icon"
         android:layout_gravity="center"
         android:id="@+id/imageViewFBPhoto"
         android:onClick="clickToLogin"/>

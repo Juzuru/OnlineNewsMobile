@@ -33,6 +33,7 @@
         android:scaleY="0.625"
         android:layout_marginRight="10dp" />
 
+    <!--
     <ImageView
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -42,4 +43,5 @@
         android:id="@+id/imageSearch"
         android:scaleX="0.625"
         android:scaleY="0.625"/>
+        -->
 </RelativeLayout>

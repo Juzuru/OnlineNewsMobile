@@ -10,7 +10,8 @@ public class NewsDTO implements Serializable {
     private String link;
     private String imageLink;
     private Bitmap imageBitmap;
-    private String newsType;
+    private int categoryId;
+    private String categoryName;
     private String rssLink;
     private String newspaper;
     private String newspaperLink;
@@ -46,14 +47,6 @@ public class NewsDTO implements Serializable {
 
     public void setNewspaper(String newspaper) {
         this.newspaper = newspaper;
-    }
-
-    public String getNewsType() {
-        return newsType;
-    }
-
-    public void setNewsType(String newsType) {
-        this.newsType = newsType;
     }
 
     public String getImageLink() {
@@ -94,5 +87,21 @@ public class NewsDTO implements Serializable {
 
     public void setMark(boolean mark) {
         isMark = mark;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }

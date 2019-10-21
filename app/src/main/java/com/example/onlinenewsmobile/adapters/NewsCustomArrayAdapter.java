@@ -2,6 +2,7 @@ package com.example.onlinenewsmobile.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,16 +26,18 @@ public class NewsCustomArrayAdapter extends ArrayAdapter<NewsDTO> {
     private AppCompatActivity context;
     private int verticalResource;
     private int horizontalResource;
+    private String color;
 
     private LayoutInflater inflater;
 
     private boolean isVertical = true;
 
-    public NewsCustomArrayAdapter(@NonNull AppCompatActivity context, int verticalResource, int horizontalResource, @NonNull List<NewsDTO> objects) {
+    public NewsCustomArrayAdapter(@NonNull AppCompatActivity context, int verticalResource, int horizontalResource, @NonNull List<NewsDTO> objects, String color) {
         super(context, verticalResource, objects);
         this.context = context;
         this.verticalResource = verticalResource;
         this.horizontalResource = horizontalResource;
+        this.color = color;
         inflater = (LayoutInflater)context.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -53,7 +56,8 @@ public class NewsCustomArrayAdapter extends ArrayAdapter<NewsDTO> {
             NewsDTO dto = getItem(position);
 
             TextView textView = convertView.findViewById(R.id.textViewNewsType);
-            textView.setText(dto.getNewsType());
+            textView.setText(dto.getCategoryName());
+            textView.setBackgroundColor(Color.parseColor(color));
             textView.setOnClickListener(onNewsTypeClickListener());
 
             textView = convertView.findViewById(R.id.textViewNewspaper);
@@ -81,7 +85,7 @@ public class NewsCustomArrayAdapter extends ArrayAdapter<NewsDTO> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, NewsDetailActivity.class);
-                intent.putExtra("newTypeName", dto.getNewsType());
+                intent.putExtra("categoryName", dto.getCategoryName());
                 intent.putExtra("link", dto.getLink());
                 context.startActivity(intent);
             }
@@ -101,7 +105,7 @@ public class NewsCustomArrayAdapter extends ArrayAdapter<NewsDTO> {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "News Type click", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "News Type click", Toast.LENGTH_SHORT).show();
             }
         };
     }
@@ -110,7 +114,7 @@ public class NewsCustomArrayAdapter extends ArrayAdapter<NewsDTO> {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Newspaper click", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Newspaper click", Toast.LENGTH_SHORT).show();
             }
         };
     }

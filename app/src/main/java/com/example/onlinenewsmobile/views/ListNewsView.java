@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.onlinenewsmobile.R;
 import com.example.onlinenewsmobile.adapters.NewsCustomArrayAdapter;
+import com.example.onlinenewsmobile.models.CategoryDTO;
 import com.example.onlinenewsmobile.models.NewsDTO;
-import com.example.onlinenewsmobile.models.NewsTypeDTO;
 import com.example.onlinenewsmobile.services.RssService;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class ListNewsView extends ListView {
     public ListNewsView(AppCompatActivity context, @NonNull ArrayList<NewsDTO> list, String color) {
         super(context);
         this.list = list;
-        adapter = new NewsCustomArrayAdapter(context, R.layout.news_item_large, R.layout.news_item_small, this.list);
+        adapter = new NewsCustomArrayAdapter(context, R.layout.news_item_large, R.layout.news_item_small, this.list, color);
         this.setAdapter(adapter);
         this.setId(R.id.list_view_news);
         this.setBackgroundColor(Color.parseColor(color));
@@ -32,8 +32,8 @@ public class ListNewsView extends ListView {
         this.adapter.addAll(list);
     }
 
-    public void addNews(NewsTypeDTO newsTypeDTO) {
-        new RssService().addNews(adapter, newsTypeDTO);
+    public void addNews(CategoryDTO categoryDTO) {
+        new RssService().addNews(adapter, categoryDTO);
     }
 
     public void removeAll() {

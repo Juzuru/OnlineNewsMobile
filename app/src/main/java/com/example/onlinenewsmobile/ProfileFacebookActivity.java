@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.onlinenewsmobile.services.ConverterService;
 import com.example.onlinenewsmobile.services.HttpRequestService;
 
 import org.json.JSONObject;
@@ -37,10 +38,7 @@ public class ProfileFacebookActivity extends AppCompatActivity {
     }
 
     public void clickToAcept(View view) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] b = baos.toByteArray();
-        imageBase64 = android.util.Base64.encodeToString(b, android.util.Base64.DEFAULT);
+        imageBase64 = new ConverterService().fromBitmapToString(imageBitmap);
 
         new UploadUserProfile().execute();
 

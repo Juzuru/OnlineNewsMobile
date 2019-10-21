@@ -1,20 +1,19 @@
 package com.example.onlinenewsmobile;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.onlinenewsmobile.services.DocumentService;
-import com.example.onlinenewsmobile.services.HttpRequestService;
 import com.example.onlinenewsmobile.services.NewsService;
 
 import java.io.IOException;
@@ -49,6 +48,16 @@ public class NewsDetailActivity extends AppCompatActivity {
         ImageView imageView = new ImageView(this);
         imageView.setImageBitmap(bitmap);
         container.addView(imageView);
+    }
+
+    private void addAuthor(String content, float size) {
+        TextView textView = new TextView(this);
+        textView.setText(content);
+        textView.setTextSize(size);
+        textView.setGravity(Gravity.END);
+        textView.setTextColor(Color.parseColor("#000000"));
+        textView.setPadding(30, 30, 30, 30);
+        container.addView(textView);
     }
 
     public void clickToBack(View view) {
@@ -100,6 +109,9 @@ public class NewsDetailActivity extends AppCompatActivity {
                                     break;
                                 case "<tim>":
                                     addContent(content.substring(5), 18);
+                                    break;
+                                case "<aut>":
+                                    addAuthor(content.substring(5), 18);
                                     break;
                                 default:
                                     addContent(content, 18);

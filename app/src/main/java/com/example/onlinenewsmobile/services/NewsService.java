@@ -48,7 +48,8 @@ public class NewsService {
 
         //Author
         Element author = section.get(1).nextElementSibling().nextElementSibling().child(1);
-        content.add(eliminateDoubleQuote(author.text()));
+        content.add("<aut>" + eliminateDoubleQuote(author.text()));
+        content.add("<aut>Theo 24h.com.vn");
 
         return content;
     }
