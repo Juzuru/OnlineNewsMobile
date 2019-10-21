@@ -88,6 +88,7 @@ public class TabView {
             public void onClick(View view) {
                 isTabTouch = true;
                 if (!previousTab.equals(view)) {
+                    context.initPagerView(position);
                     context.viewPager.setCurrentItem(position, false);
 
                     ViewGroup.LayoutParams layoutParams = previousTab.getLayoutParams();

@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.onlinenewsmobile.R;
+import com.example.onlinenewsmobile.models.CategoryDTO;
 import com.example.onlinenewsmobile.models.NewsDTO;
-import com.example.onlinenewsmobile.models.NewsTypeDTO;
 import com.example.onlinenewsmobile.views.ListNewsView;
 
 import java.util.ArrayList;
@@ -57,8 +57,8 @@ public class ViewPagerAdapter extends PagerAdapter {
         listViewNews[position].addNews(list);
     }
 
-    public void addNews(NewsTypeDTO newsTypeDTO, int position) {
-        listViewNews[position].addNews(newsTypeDTO);
+    public void addNews(CategoryDTO categoryDTO, int position) {
+        listViewNews[position].addNews(categoryDTO);
     }
 
     public void removeAllNews(){

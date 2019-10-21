@@ -11,13 +11,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.onlinenewsmobile.MenuActivity;
+import com.example.onlinenewsmobile.NewspaperActivity;
 import com.example.onlinenewsmobile.R;
 import com.example.onlinenewsmobile.views.search.SearchNewsActivity;
 
 public class HeaderView {
     private static final int SETTING_CHANGED = 210;
+    private static final int NEWSPAPER_SELECTED = 220;
 
     private AppCompatActivity context;
+    private TextView textViewTitle;
 
     public HeaderView(AppCompatActivity context, boolean isDashboard, String headerNasme) {
         this.context = context;
@@ -27,15 +30,11 @@ public class HeaderView {
         RelativeLayout relativeLayout = context.findViewById(R.id.relativeLayoutHeader);
 
         ImageView imageViewMenu = relativeLayout.findViewById(R.id.imageViewMenu);
-        if (isDashboard) {
-            imageViewMenu.setOnClickListener(onMenuClick());
-        } else {
-            imageViewMenu.setImageResource(R.drawable.less_than_icon);
-        }
-
-        relativeLayout.findViewById(R.id.imageSearch).setOnClickListener(onSearchClick());
+        imageViewMenu.setOnClickListener(onMenuClick());
+        //relativeLayout.findViewById(R.id.imageSearch).setOnClickListener(onSearchClick());
         relativeLayout.findViewById(R.id.imageOpenBook).setOnClickListener(onNewspaperClick());
-        ((TextView) relativeLayout.findViewById(R.id.textViewNewspaper)).setText(headerNasme);
+        textViewTitle = relativeLayout.findViewById(R.id.textViewNewspaper);
+        textViewTitle.setText(headerNasme);
     }
 
     private View.OnClickListener onMenuClick() {
@@ -48,32 +47,37 @@ public class HeaderView {
         };
     }
 
-    private View.OnClickListener onBackClick() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "Back", Toast.LENGTH_SHORT).show();
-            }
-        };
-    }
-
-    private View.OnClickListener onSearchClick() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, SearchNewsActivity.class);
-                context.startActivity(intent);
-                Toast.makeText(context, "Search", Toast.LENGTH_SHORT).show();
-            }
-        };
-    }
+//    private View.OnClickListener onBackClick() {
+//        return new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(context, "Back", Toast.LENGTH_SHORT).show();
+//            }
+//        };
+//    }
+//
+//    private View.OnClickListener onSearchClick() {
+//        return new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, SearchNewsActivity.class);
+//                context.startActivity(intent);
+//                Toast.makeText(context, "Search", Toast.LENGTH_SHORT).show();
+//            }
+//        };
+//    }
 
     private View.OnClickListener onNewspaperClick() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Newspaper", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, NewspaperActivity.class);
+                context.startActivityForResult(intent, NEWSPAPER_SELECTED);
             }
         };
+    }
+
+    public void setTitle(String title) {
+        textViewTitle.setText(title);
     }
 }
