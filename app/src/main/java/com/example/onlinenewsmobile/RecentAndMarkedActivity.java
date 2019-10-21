@@ -25,7 +25,6 @@ public class RecentAndMarkedActivity extends AppCompatActivity {
 
     private ViewGroup.LayoutParams active;
     private ViewGroup.LayoutParams inactive;
-
     private ViewPagerAdapter adapter;
 
     @Override
@@ -46,7 +45,7 @@ public class RecentAndMarkedActivity extends AppCompatActivity {
         activeTextView.setLayoutParams(active);
 
         activeTextView.setOnClickListener(onClickListener());
-        findViewById(R.id.imageViewBookMark).setOnClickListener(onClickListener());
+//        findViewById(R.id.imageViewBookMark).setOnClickListener(onClickListener());
 
         adapter = new ViewPagerAdapter(this, 2);
     }

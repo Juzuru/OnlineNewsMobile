@@ -8,6 +8,7 @@
 
     <string name="colorGray">#B4B4B4</string>
 
+
     <string-array name="color_hex_code">
         <!--crimson, darkorange, limegreen, darkgreen, yellowgreen-->
         <!--olive, darkturquoise, teal, dodgerblue, darkblue-->

@@ -138,7 +138,8 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void clickToGoToRecent(View view) {
-
+            Intent intent = new Intent(getApplicationContext(), RecentAndMarkedActivity.class);
+            startActivity(intent);
     }
 
     public void clickToChangeReadMode(View view) {

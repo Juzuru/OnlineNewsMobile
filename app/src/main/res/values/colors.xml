@@ -22,4 +22,6 @@
     <color name="colorPurple">#800080</color>
     <color name="colorMediumvioletred">#C71585</color>
     <color name="colorMaroon">#800000</color>
+    <color name="colorBlack">#000000</color>
+
 </resources>

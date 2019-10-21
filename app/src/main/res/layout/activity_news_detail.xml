@@ -39,8 +39,24 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:id="@+id/linearNewsContainer"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Có thể bạn muốn đọc"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_suggesst"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
     </ScrollView>
 </LinearLayout>

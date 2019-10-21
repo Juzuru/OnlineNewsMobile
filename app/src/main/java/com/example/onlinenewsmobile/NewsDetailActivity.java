@@ -1,6 +1,8 @@
 package com.example.onlinenewsmobile;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,12 +15,21 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.example.onlinenewsmobile.adapters.suggesst.SuggestedNewsAdapter;
+import com.example.onlinenewsmobile.models.KA.TopNewsHighReadTimes;
+import com.example.onlinenewsmobile.retrofit2.APIUtils;
+import com.example.onlinenewsmobile.retrofit2.client.NewsClient;
 import com.example.onlinenewsmobile.services.DocumentService;
 import com.example.onlinenewsmobile.services.HttpRequestService;
 import com.example.onlinenewsmobile.services.NewsService;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class NewsDetailActivity extends AppCompatActivity {
@@ -34,6 +45,10 @@ public class NewsDetailActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.textViewCategory)).setText(intent.getStringExtra("newTypeName"));
         container = findViewById(R.id.linearNewsContainer);
         new NewsReader().execute("24h", intent.getStringExtra("link"));
+
+        //Mai thêm
+
+        getTopNewsHighReadTimes();
     }
 
     private void addContent(String content, float size) {
@@ -133,5 +148,28 @@ public class NewsDetailActivity extends AppCompatActivity {
             //container.addView(view);
 
         }
+    }
+
+    private void getTopNewsHighReadTimes() {
+        NewsClient newsClient = APIUtils.getNewsClient();
+        Call<List<TopNewsHighReadTimes>> listCall = newsClient.getTopNewsHighReadTimes();
+        listCall.enqueue(new Callback<List<TopNewsHighReadTimes>>() {
+            @Override
+            public void onResponse(Call<List<TopNewsHighReadTimes>> call, Response<List<TopNewsHighReadTimes>> response) {
+                if (response.isSuccessful()) {
+                    List<TopNewsHighReadTimes> topNewsHighReadTimesList = new ArrayList<>();
+                    topNewsHighReadTimesList = response.body();
+                    RecyclerView recyclerView = findViewById(R.id.recycler_view_suggesst);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
+                    SuggestedNewsAdapter suggestedNewsAdapter = new SuggestedNewsAdapter(topNewsHighReadTimesList, getApplicationContext());
+                    recyclerView.setAdapter(suggestedNewsAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<TopNewsHighReadTimes>> call, Throwable t) {
+
+            }
+        });
     }
 }

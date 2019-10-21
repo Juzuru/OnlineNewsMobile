@@ -66,7 +66,6 @@ public class SearchNewsAdapter extends RecyclerView.Adapter<SearchNewsAdapter.Ne
         public NewsHolder(@NonNull View itemView) {
             super(itemView);
             txtTitle = itemView.findViewById(R.id.txtTitle);
-            txtTimer = itemView.findViewById(R.id.txtTimer);
             txtNewspaper = itemView.findViewById(R.id.txtNewPaper);
             imgTitle = itemView.findViewById(R.id.image);
         }
