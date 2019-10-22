@@ -45,6 +45,35 @@ public class CategoryDAO implements Serializable {
         return list;
     }
 
+    public ArrayList<CategoryDTO> getByNewspaperIdForSetting(int newspaperId) {
+        ArrayList<CategoryDTO> list = new ArrayList<>();
+
+        SQLiteDatabase db = dbManager.getReadableDatabase();
+        Cursor cursor = db.query(DBManager.CATEGORY_TABLE_NAME,
+                new String[]{DBManager.CATEGORY_ID, DBManager.CATEGORY_NAME, DBManager.CATEGORY_NEWSPAPER_ID, DBManager.CATEGORY_RSS_LINK, DBManager.CATEGORY_VISIBLE},
+                DBManager.CATEGORY_NEWSPAPER_ID + "=?",
+                new String[]{String.valueOf(newspaperId)},
+                null, null, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                CategoryDTO dto;
+                do {
+                    dto = new CategoryDTO();
+                    dto.setId(cursor.getInt(0));
+                    dto.setName(cursor.getString(1));
+                    dto.setNewspaperId(cursor.getInt(2));
+                    dto.setRssLink(cursor.getString(3));
+                    dto.setVisible(Boolean.parseBoolean(cursor.getString(4)));
+
+                    list.add(dto);
+                } while (cursor.moveToNext());
+            }
+        }
+
+        return list;
+    }
+
     public ArrayList<CategoryDTO> getAllActive() {
         ArrayList<CategoryDTO> list = new ArrayList<>();
 

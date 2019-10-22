@@ -48,11 +48,26 @@ public class NewspaperDAO implements Serializable {
         return list;
     }
 
+    public int getNewspaperIdByName(String name) {
+        SQLiteDatabase db = dbManager.getReadableDatabase();
+        Cursor cursor = db.query(DBManager.NEWSPAPER_TABLE_NAME,
+                new String[]{DBManager.NEWSPAPER_ID},
+                DBManager.NEWSPAPER_NAME + "=?", new String[]{name},
+                null, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                return cursor.getInt(0);
+            }
+        }
+
+        return -1;
+    }
+
     public NewspaperDTO getById(int id) {
         SQLiteDatabase db = dbManager.getReadableDatabase();
         Cursor cursor = db.query(DBManager.NEWSPAPER_TABLE_NAME,
                 new String[]{DBManager.NEWSPAPER_NAME, DBManager.NEWSPAPER_IMAGE_BASE64},
-                DBManager.CATEGORY_ID + "=?", new String[]{String.valueOf(id)},
+                DBManager.NEWSPAPER_ID + "=?", new String[]{String.valueOf(id)},
                 null, null, null);
 
         if (cursor != null) {

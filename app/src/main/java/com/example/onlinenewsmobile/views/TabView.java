@@ -86,6 +86,11 @@ public class TabView {
             @Override
             public void onClick(View view) {
                 if (!previousTab.equals(view)) {
+                    if (position == 0) {
+                        context.viewPager.setCurrentItem(1, false);
+                    } else {
+                        context.viewPager.setCurrentItem(position - 1, false);
+                    }
                     context.viewPager.setCurrentItem(position, false);
                 }
             }

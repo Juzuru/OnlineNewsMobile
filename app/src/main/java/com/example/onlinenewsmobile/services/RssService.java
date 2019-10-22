@@ -18,7 +18,7 @@ public class RssService {
 
     public void addNews(NewsCustomArrayAdapter newsCustomArrayAdapter, CategoryDTO categoryDTO) {
         this.categoryDTO = categoryDTO;
-        new RssReader(newsCustomArrayAdapter).execute(categoryDTO.getRssLink(), categoryDTO.getNewspaper(), categoryDTO.getName());
+        new RssReader(newsCustomArrayAdapter).execute(categoryDTO.getRssLink(), categoryDTO.getNewspaper(), categoryDTO.getName(), String.valueOf(categoryDTO.getId()));
     }
 
     private class RssReader extends AsyncTask<String, Void, ArrayList<NewsDTO>> {
@@ -34,9 +34,9 @@ public class RssService {
             try {
                 switch (strings[1]) {
                     case "24h":
-                        return getNewsItemFrom24h(strings[0], strings[1]);
+                        return getNewsItemFrom24h(strings[0], strings[1] ,strings[2], strings[3]);
                     case "Dân Trí":
-                        return getNewsItemFromDanTri(strings[0], strings[1], strings[2]);
+                        return getNewsItemFromDanTri(strings[0], strings[1], strings[2], strings[3]);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -51,7 +51,7 @@ public class RssService {
         }
     }
 
-    private ArrayList<NewsDTO> getNewsItemFrom24h(String rssLink, String newspaper) throws Exception{
+    private ArrayList<NewsDTO> getNewsItemFrom24h(String rssLink, String newspaper, String category, String categoryId) throws Exception{
         ArrayList<NewsDTO> list = new ArrayList<>();
         NewsDTO dto;
 
@@ -97,6 +97,8 @@ public class RssService {
                 }
             } while ((element = element.nextElementSibling()) != null);
             dto.setNewspaper(newspaper);
+            dto.setCategoryName(category);
+            dto.setCategoryId(Integer.parseInt(categoryId));
             list.add(dto);
         }
 
@@ -112,7 +114,7 @@ public class RssService {
         return list;
     }
 
-    private ArrayList<NewsDTO> getNewsItemFromDanTri(String rssLink, String newspaper, String category) throws Exception{
+    private ArrayList<NewsDTO> getNewsItemFromDanTri(String rssLink, String newspaper, String category, String categoryId) throws Exception{
         ArrayList<NewsDTO> list = new ArrayList<>();
         NewsDTO dto;
 
@@ -133,6 +135,8 @@ public class RssService {
             element = element.nextElementSibling().nextElementSibling().nextElementSibling();
             dto.setDescription(eliminateDoubleQuote(element.ownText()));
             dto.setNewspaper(newspaper);
+            dto.setCategoryName(category);
+            dto.setCategoryId(Integer.parseInt(categoryId));
             list.add(dto);
 
             elements = document.getElementsByClass("wid330");
@@ -144,6 +148,8 @@ public class RssService {
                 dto.setTitle(eliminateDoubleQuote(element.text()));
                 dto.setDescription(eliminateDoubleQuote(element.nextElementSibling().ownText()));
                 dto.setNewspaper(newspaper);
+                dto.setCategoryName(category);
+                dto.setCategoryId(Integer.parseInt(categoryId));
                 list.add(dto);
             }
         } else {
@@ -156,6 +162,8 @@ public class RssService {
                 dto.setTitle(eliminateDoubleQuote(element.child(0).attr("title")));
                 dto.setDescription(eliminateDoubleQuote(element.nextElementSibling().child(0).nextElementSibling().ownText()));
                 dto.setNewspaper(newspaper);
+                dto.setCategoryName(category);
+                dto.setCategoryId(Integer.parseInt(categoryId));
                 list.add(dto);
             }
         }

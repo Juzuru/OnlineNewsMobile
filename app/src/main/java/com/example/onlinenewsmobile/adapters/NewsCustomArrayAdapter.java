@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.onlinenewsmobile.NewsDetailActivity;
 import com.example.onlinenewsmobile.R;
+import com.example.onlinenewsmobile.daos.NewsDAO;
 import com.example.onlinenewsmobile.models.NewsDTO;
 
 import java.util.List;
@@ -85,6 +86,10 @@ public class NewsCustomArrayAdapter extends ArrayAdapter<NewsDTO> {
                 intent.putExtra("categoryName", dto.getCategoryName());
                 intent.putExtra("link", dto.getLink());
                 intent.putExtra("newspaper", dto.getNewspaper());
+
+                NewsDAO dao = new NewsDAO(context);
+                dao.setRecent(dto);
+
                 context.startActivity(intent);
             }
         };

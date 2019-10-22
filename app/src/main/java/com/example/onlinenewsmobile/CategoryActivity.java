@@ -23,7 +23,6 @@ public class CategoryActivity extends AppCompatActivity {
     private static final int SETTING_NOT_CHANGED = 310;
 
     private boolean isChanged = false;
-    private int activeCategories;
 
     private ListView listView;
     private  CategoryCustomAdapter adapter;
@@ -43,7 +42,7 @@ public class CategoryActivity extends AppCompatActivity {
         String categoryName;
         int n = 0;
         for (int i = 0; i < newspaperDTOS.size(); i++) {
-            categoryDTOS.addAll(categoryDAO.getByNewspaperId(newspaperDTOS.get(i).getId()));
+            categoryDTOS.addAll(categoryDAO.getByNewspaperIdForSetting(newspaperDTOS.get(i).getId()));
             for (int j = n; j < categoryDTOS.size(); j++) {
                 categoryName = categoryDTOS.get(j).getName();
                 categoryDTOS.get(j).setName(newspaperDTOS.get(i).getName() + " - " + categoryName);
@@ -62,7 +61,6 @@ public class CategoryActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (isChanged) {
             intent.putExtra("category", true);
-            intent.putExtra("activeCategories", activeCategories);
             setResult(SETTING_CHANGED, intent);
         } else {
             setResult(SETTING_NOT_CHANGED, intent);
@@ -76,15 +74,11 @@ public class CategoryActivity extends AppCompatActivity {
 
     public void clickToSaveChanges(View view) {
         if (buttonSave.isActivated()) {
-            activeCategories = 0;
             CategoryDAO dao = new CategoryDAO(this);
 
             for (int i = 0; i < adapter.getCount(); i++) {
                 CategoryDTO dto = (CategoryDTO) adapter.getItem(i);
                 dao.update(dto);
-
-                if (dto.isVisible())
-                    activeCategories++;
             }
             buttonSave.setBackgroundResource(R.color.colorGray);
             buttonSave.setTextColor(Color.parseColor("#000000"));
