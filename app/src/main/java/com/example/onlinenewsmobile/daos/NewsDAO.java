@@ -102,7 +102,7 @@ public class NewsDAO implements Serializable {
         return list;
     }
 
-    public ArrayList<NewsDTO> getMRencent() {
+    public ArrayList<NewsDTO> getRencent() {
         ArrayList<NewsDTO> list = new ArrayList<>();
 
         SQLiteDatabase db = dbManager.getReadableDatabase();

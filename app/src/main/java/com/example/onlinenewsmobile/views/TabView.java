@@ -33,7 +33,6 @@ public class TabView {
     private RelativeLayout relativeLayout;
     private HorizontalScrollView horizontalScrollView;
 
-    private boolean isTabTouch = false;
     private TextView[] textViews;
 
     public TabView(MainActivity context, ArrayList<CategoryDTO> categories) {
@@ -86,40 +85,29 @@ public class TabView {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isTabTouch = true;
                 if (!previousTab.equals(view)) {
-                    context.initPagerView(position);
+                    if (position == 0) {
+                        context.viewPager.setCurrentItem(1, false);
+                    } else {
+                        context.viewPager.setCurrentItem(position - 1, false);
+                    }
                     context.viewPager.setCurrentItem(position, false);
-
-                    ViewGroup.LayoutParams layoutParams = previousTab.getLayoutParams();
-                    layoutParams.height -= TAB_HEIGHT;
-                    previousTab.setLayoutParams(layoutParams);
-                    previousTab = (TextView) view;
-                    layoutParams = previousTab.getLayoutParams();
-                    layoutParams.height += TAB_HEIGHT;
-                    previousTab.setLayoutParams(layoutParams);
-
-                    horizontalScrollView.setScrollX(view.getLeft() - ((deviceWidth - view.getWidth()) / 2));
-                    relativeLayout.setBackgroundColor(Color.parseColor(colors[position]));
                 }
-                isTabTouch = false;
             }
         };
     }
 
     public void notifyPageChanged(int position) {
-        if (!isTabTouch) {
-            ViewGroup.LayoutParams layoutParams = previousTab.getLayoutParams();
-            layoutParams.height -= TAB_HEIGHT;
-            previousTab.setLayoutParams(layoutParams);
-            previousTab = (TextView) linearLayout.getChildAt(position);
-            layoutParams = previousTab.getLayoutParams();
-            layoutParams.height += TAB_HEIGHT;
-            previousTab.setLayoutParams(layoutParams);
+        ViewGroup.LayoutParams layoutParams = previousTab.getLayoutParams();
+        layoutParams.height -= TAB_HEIGHT;
+        previousTab.setLayoutParams(layoutParams);
+        previousTab = (TextView) linearLayout.getChildAt(position);
+        layoutParams = previousTab.getLayoutParams();
+        layoutParams.height += TAB_HEIGHT;
+        previousTab.setLayoutParams(layoutParams);
 
-            relativeLayout.setBackgroundColor(Color.parseColor(colors[position]));
-            horizontalScrollView.setScrollX(previousTab.getLeft() - ((deviceWidth - previousTab.getWidth()) / 2));
-        }
+        relativeLayout.setBackgroundColor(Color.parseColor(colors[position%colors.length]));
+        horizontalScrollView.setScrollX(previousTab.getLeft() - ((deviceWidth - previousTab.getWidth()) / 2));
     }
 
     public void notifyTabChanged(ArrayList<CategoryDTO> categories) {

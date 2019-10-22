@@ -45,6 +45,35 @@ public class CategoryDAO implements Serializable {
         return list;
     }
 
+    public ArrayList<CategoryDTO> getByNewspaperIdForSetting(int newspaperId) {
+        ArrayList<CategoryDTO> list = new ArrayList<>();
+
+        SQLiteDatabase db = dbManager.getReadableDatabase();
+        Cursor cursor = db.query(DBManager.CATEGORY_TABLE_NAME,
+                new String[]{DBManager.CATEGORY_ID, DBManager.CATEGORY_NAME, DBManager.CATEGORY_NEWSPAPER_ID, DBManager.CATEGORY_RSS_LINK, DBManager.CATEGORY_VISIBLE},
+                DBManager.CATEGORY_NEWSPAPER_ID + "=?",
+                new String[]{String.valueOf(newspaperId)},
+                null, null, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                CategoryDTO dto;
+                do {
+                    dto = new CategoryDTO();
+                    dto.setId(cursor.getInt(0));
+                    dto.setName(cursor.getString(1));
+                    dto.setNewspaperId(cursor.getInt(2));
+                    dto.setRssLink(cursor.getString(3));
+                    dto.setVisible(Boolean.parseBoolean(cursor.getString(4)));
+
+                    list.add(dto);
+                } while (cursor.moveToNext());
+            }
+        }
+
+        return list;
+    }
+
     public ArrayList<CategoryDTO> getAllActive() {
         ArrayList<CategoryDTO> list = new ArrayList<>();
 
@@ -75,90 +104,62 @@ public class CategoryDAO implements Serializable {
         return list;
     }
 
-    public CategoryDTO getById(int id) {
+    public ArrayList<CategoryDTO> getByNewspaperId(int newspaperId) {
+        ArrayList<CategoryDTO> list = new ArrayList<>();
+
         SQLiteDatabase db = dbManager.getReadableDatabase();
         Cursor cursor = db.query(DBManager.CATEGORY_TABLE_NAME,
-                new String[]{DBManager.CATEGORY_NAME, DBManager.CATEGORY_NEWSPAPER_ID, DBManager.CATEGORY_RSS_LINK},
-                DBManager.CATEGORY_ID + "=?", new String[]{String.valueOf(id)},
+                new String[]{DBManager.CATEGORY_ID, DBManager.CATEGORY_NAME, DBManager.CATEGORY_NEWSPAPER_ID, DBManager.CATEGORY_RSS_LINK},
+                DBManager.CATEGORY_NEWSPAPER_ID + "=?",
+                new String[]{String.valueOf(newspaperId)},
                 null, null, null);
 
         if (cursor != null) {
             if (cursor.moveToFirst()) {
-                CategoryDTO dto = new CategoryDTO();
-                dto.setId(id);
-                dto.setName(cursor.getString(0));
-                dto.setNewspaperId(cursor.getInt(1));
-                dto.setRssLink(cursor.getString(2));
+                CategoryDTO dto;
+                do {
+                    dto = new CategoryDTO();
+                    dto.setId(cursor.getInt(0));
+                    dto.setName(cursor.getString(1));
+                    dto.setNewspaperId(cursor.getInt(2));
+                    dto.setRssLink(cursor.getString(3));
+                    dto.setVisible(true);
 
-                return dto;
+                    list.add(dto);
+                } while (cursor.moveToNext());
             }
         }
 
-        return null;
+        return list;
     }
-    
-    public ArrayList<CategoryDTO> seed(int newspaperId) {
-        ArrayList<CategoryDTO> categories = new ArrayList<>();
 
-        CategoryDTO categoryDTO = new CategoryDTO();
-        categoryDTO.setName("Trang chủ");
-        categoryDTO.setVisible(true);
-        categoryDTO.setNewspaperId(newspaperId);
-        categoryDTO.setRssLink("24h.com.vn/upload/rss/trangchu24h.rss");
-        categories.add(categoryDTO);
+    public ArrayList<CategoryDTO> getActiveByNewspaperId(int newspaperId) {
+        ArrayList<CategoryDTO> list = new ArrayList<>();
 
-        categoryDTO = new CategoryDTO();
-        categoryDTO.setName("Bóng đá");
-        categoryDTO.setVisible(true);
-        categoryDTO.setNewspaperId(newspaperId);
-        categoryDTO.setRssLink("24h.com.vn/upload/rss/bongda.rss");
-        categories.add(categoryDTO);
+        SQLiteDatabase db = dbManager.getReadableDatabase();
+        Cursor cursor = db.query(DBManager.CATEGORY_TABLE_NAME,
+                new String[]{DBManager.CATEGORY_ID, DBManager.CATEGORY_NAME, DBManager.CATEGORY_NEWSPAPER_ID, DBManager.CATEGORY_RSS_LINK},
+                DBManager.CATEGORY_NEWSPAPER_ID + "=? and " + DBManager.CATEGORY_VISIBLE + "=?",
+                new String[]{String.valueOf(newspaperId), String.valueOf(true)},
+                null, null, null);
 
-        categoryDTO = new CategoryDTO();
-        categoryDTO.setName("An ninh - Hình sự");
-        categoryDTO.setVisible(true);
-        categoryDTO.setNewspaperId(newspaperId);
-        categoryDTO.setRssLink("24h.com.vn/upload/rss/anninhhinhsu.rss");
-        categories.add(categoryDTO);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                CategoryDTO dto;
+                do {
+                    dto = new CategoryDTO();
+                    dto.setId(cursor.getInt(0));
+                    dto.setName(cursor.getString(1));
+                    dto.setNewspaperId(cursor.getInt(2));
+                    dto.setRssLink(cursor.getString(3));
+                    dto.setVisible(true);
 
-        categoryDTO = new CategoryDTO();
-        categoryDTO.setName("Thời trang");
-        categoryDTO.setVisible(true);
-        categoryDTO.setNewspaperId(newspaperId);
-        categoryDTO.setRssLink("24h.com.vn/upload/rss/thoitrang.rss");
-        categories.add(categoryDTO);
+                    list.add(dto);
+                } while (cursor.moveToNext());
+            }
+        }
 
-        categoryDTO = new CategoryDTO();
-        categoryDTO.setName("Ẩm thực");
-        categoryDTO.setVisible(true);
-        categoryDTO.setNewspaperId(newspaperId);
-        categoryDTO.setRssLink("\t24h.com.vn/upload/rss/amthuc.rss");
-        categories.add(categoryDTO);
-
-        categoryDTO = new CategoryDTO();
-        categoryDTO.setName("Giáo dục - du học");
-        categoryDTO.setVisible(true);
-        categoryDTO.setNewspaperId(newspaperId);
-        categoryDTO.setRssLink("24h.com.vn/upload/rss/giaoducduhoc.rss");
-        categories.add(categoryDTO);
-
-        return categories;
-
-//        SQLiteDatabase db = dbManager.getWritableDatabase();
-//
-//        ContentValues values;
-//        CategoryDTO dto;
-//        for (int i = 0; i < categories.size(); i++) {
-//            dto = categories.get(i);
-//            values = new ContentValues();
-//            values.put(DBManager.CATEGORY_NAME, dto.getName());
-//            values.put(DBManager.CATEGORY_VISIBLE, String.valueOf(true));
-//            values.put(DBManager.CATEGORY_NEWSPAPER_ID, dto.getNewspaperId());
-//            values.put(DBManager.CATEGORY_RSS_LINK, dto.getRssLink());
-//            db.insert(DBManager.CATEGORY_TABLE_NAME, null, values);
-//        }
-//
-//        db.close();
+        return list;
     }
 
     public int update(CategoryDTO categoryDTO) {
@@ -169,5 +170,18 @@ public class CategoryDAO implements Serializable {
         int raw = db.update(DBManager.CATEGORY_TABLE_NAME, values, DBManager.CATEGORY_ID + "=?", new String[]{String.valueOf(categoryDTO.getId())});
         db.close();
         return raw;
+    }
+
+    public void create(CategoryDTO categoryDTO) {
+        SQLiteDatabase db = dbManager.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(DBManager.CATEGORY_NAME, categoryDTO.getName());
+        values.put(DBManager.CATEGORY_VISIBLE, String.valueOf(true));
+        values.put(DBManager.CATEGORY_NEWSPAPER_ID, categoryDTO.getNewspaperId());
+        values.put(DBManager.CATEGORY_RSS_LINK, categoryDTO.getRssLink());
+
+        db.insert(DBManager.CATEGORY_TABLE_NAME, null, values);
+        db.close();
     }
 }

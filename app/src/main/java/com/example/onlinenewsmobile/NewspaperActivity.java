@@ -28,7 +28,7 @@ public class NewspaperActivity extends AppCompatActivity {
 
         NewspaperDAO newspaperDAO = new NewspaperDAO(this);
 
-        ArrayList<NewspaperDTO> list = newspaperDAO.seed();
+        ArrayList<NewspaperDTO> list = newspaperDAO.getAll();
 
         adapter = new NewspaperCustomArrayAdapter(this, R.layout.newspaper_item, list);
         listView = findViewById(R.id.listViewNewspaper);
@@ -50,6 +50,6 @@ public class NewspaperActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        fileList();
+        finish();
     }
 }

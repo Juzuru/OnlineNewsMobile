@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.onlinenewsmobile.NewsDetailActivity;
 import com.example.onlinenewsmobile.R;
+import com.example.onlinenewsmobile.daos.NewsDAO;
 import com.example.onlinenewsmobile.models.NewsDTO;
 
 import java.util.List;
@@ -26,18 +27,16 @@ public class NewsCustomArrayAdapter extends ArrayAdapter<NewsDTO> {
     private AppCompatActivity context;
     private int verticalResource;
     private int horizontalResource;
-    private String color;
 
     private LayoutInflater inflater;
 
     private boolean isVertical = true;
 
-    public NewsCustomArrayAdapter(@NonNull AppCompatActivity context, int verticalResource, int horizontalResource, @NonNull List<NewsDTO> objects, String color) {
+    public NewsCustomArrayAdapter(@NonNull AppCompatActivity context, int verticalResource, int horizontalResource, @NonNull List<NewsDTO> objects) {
         super(context, verticalResource, objects);
         this.context = context;
         this.verticalResource = verticalResource;
         this.horizontalResource = horizontalResource;
-        this.color = color;
         inflater = (LayoutInflater)context.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -55,24 +54,23 @@ public class NewsCustomArrayAdapter extends ArrayAdapter<NewsDTO> {
         try {
             NewsDTO dto = getItem(position);
 
-            TextView textView = convertView.findViewById(R.id.textViewNewsType);
-            textView.setText(dto.getCategoryName());
-            textView.setBackgroundColor(Color.parseColor(color));
-            textView.setOnClickListener(onNewsTypeClickListener());
-
-            textView = convertView.findViewById(R.id.textViewNewspaper);
-            textView.setText(dto.getNewspaper());
-            textView.setOnClickListener(onNewspaperClickListener());
-
             ((TextView) convertView.findViewById(R.id.textViewTitle)).setText(dto.getTitle());
-            //((ImageView) convertView.findViewById(R.id.imageViewNews)).setImageBitmap(dto.getImageBitmap());
             if (isVertical) {
                 ((TextView) convertView.findViewById(R.id.textViewDescription)).setText(dto.getDescription());
             }
             ImageView imageView = convertView.findViewById(R.id.imageViewBookMark);
-
+            if (dto.isMark()) {
+                imageView.setImageResource(R.drawable.bookmark_icon_marked);
+            }
             imageView.setOnClickListener(onBookMarkClickListener());
             convertView.setOnClickListener(onNewsClickListener(dto));
+
+            imageView = convertView.findViewById(R.id.imageViewNews);
+            if (dto.getImageBitmap() == null) {
+                imageView.setImageResource(R.drawable.no_photo);
+            } else {
+                imageView.setImageBitmap(dto.getImageBitmap());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,6 +85,11 @@ public class NewsCustomArrayAdapter extends ArrayAdapter<NewsDTO> {
                 Intent intent = new Intent(context, NewsDetailActivity.class);
                 intent.putExtra("categoryName", dto.getCategoryName());
                 intent.putExtra("link", dto.getLink());
+                intent.putExtra("newspaper", dto.getNewspaper());
+
+                NewsDAO dao = new NewsDAO(context);
+                dao.setRecent(dto);
+
                 context.startActivity(intent);
             }
         };
@@ -97,24 +100,6 @@ public class NewsCustomArrayAdapter extends ArrayAdapter<NewsDTO> {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "Bookmark click", Toast.LENGTH_SHORT).show();
-            }
-        };
-    }
-
-    private View.OnClickListener onNewsTypeClickListener() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(context, "News Type click", Toast.LENGTH_SHORT).show();
-            }
-        };
-    }
-
-    private View.OnClickListener onNewspaperClickListener() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(context, "Newspaper click", Toast.LENGTH_SHORT).show();
             }
         };
     }

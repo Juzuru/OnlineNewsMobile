@@ -23,6 +23,7 @@ public class DBManager extends SQLiteOpenHelper {
     public static final String NEWSPAPER_ID = "id";
     public static final String NEWSPAPER_NAME = "name";
     public static final String NEWSPAPER_IMAGE_BASE64 = "imageBase64";
+    public static final String NEWSPAPER_SERVER_ID = "serverId";
 
     public static final String NEWS_TABLE_NAME = "News";
     public static final String NEWS_ID = "id";
@@ -50,6 +51,7 @@ public class DBManager extends SQLiteOpenHelper {
         sql = "CREATE TABLE " + NEWSPAPER_TABLE_NAME + " ("
                 + NEWSPAPER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + NEWSPAPER_NAME + " TEXT, "
+                + NEWSPAPER_SERVER_ID + " INTEGER, "
                 + NEWSPAPER_IMAGE_BASE64 + " TEXT)";
         db.execSQL(sql);
 
