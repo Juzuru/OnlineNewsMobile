@@ -89,15 +89,28 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == SETTING_CHANGED) {
             if (data.getBooleanExtra("category", false)) {
-                categories = categoryDAO.getAllActive();
+                SharedPreferences sharedPref = this.getSharedPreferences(getString(R.string.preference_app_setting), Context.MODE_PRIVATE);
+                String name = sharedPref.getString("currentNewspaper", "");
+                if (name.isEmpty()) {
+                    categories = categoryDAO.getActiveByNewspaperId(0);
+                    headerView.setTitle(newspaperDAO.getById(0).getName());
+                } else {
+                    categories = categoryDAO.getActiveByNewspaperId(newspaperDAO.getNewspaperIdByName(name));
+                    for (int i = 0; i < categories.size(); i++) {
+                        categories.get(i).setNewspaper(name);
+                    }
+                    headerView.setTitle(name);
+                }
                 tabView.notifyTabChanged(categories);
-                viewPagerAdapter = new ViewPagerAdapter(this, data.getIntExtra("activeCategories", 0));
+                viewPagerAdapter = new ViewPagerAdapter(this, categories.size());
                 viewPager.setAdapter(viewPagerAdapter);
+
             }
             if (isVertical != data.getBooleanExtra("isVertical", false)) {
                 isVertical = !isVertical;
                 viewPagerAdapter.removeAllNews();
             }
+            viewPager.setCurrentItem(1);
             viewPager.setCurrentItem(0);
             viewPagerAdapter.setOrientation(isVertical);
             saveSetting();
@@ -115,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
                 viewPagerAdapter.setOrientation(isVertical);
                 viewPager.setAdapter(viewPagerAdapter);
                 initPagerView(0);
+                viewPager.setCurrentItem(1);
+                viewPager.setCurrentItem(0);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -199,11 +214,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-            categories = categoryDAO.getActiveByNewspaperId(newspaperDTOS.get(0).getId());
+            categories = categoryDAO.getActiveByNewspaperId(newspaperDTOS.get(1).getId());
             for (int i = 0; i < categories.size(); i++) {
-                categories.get(i).setNewspaper(newspaperDTOS.get(0).getName());
+                categories.get(i).setNewspaper(newspaperDTOS.get(1).getName());
             }
-            initMainView(newspaperDTOS.get(0).getName());
+            initMainView(newspaperDTOS.get(1).getName());
         }
     }
 }

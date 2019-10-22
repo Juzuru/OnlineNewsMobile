@@ -1,6 +1,8 @@
 package com.example.onlinenewsmobile.views;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,7 +43,10 @@ public class HeaderView {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.preference_app_setting), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("currentNewspaper", textViewTitle.getText().toString());
+                editor.apply();
                 context.startActivityForResult(new Intent(context, MenuActivity.class), SETTING_CHANGED);
             }
         };

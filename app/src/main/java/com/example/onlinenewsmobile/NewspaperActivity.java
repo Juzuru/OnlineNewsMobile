@@ -50,6 +50,6 @@ public class NewspaperActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        fileList();
+        finish();
     }
 }
