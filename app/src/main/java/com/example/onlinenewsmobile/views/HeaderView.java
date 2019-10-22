@@ -22,7 +22,7 @@ public class HeaderView {
     private AppCompatActivity context;
     private TextView textViewTitle;
 
-    public HeaderView(AppCompatActivity context, boolean isDashboard, String headerNasme) {
+    public HeaderView(AppCompatActivity context, String headerNasme) {
         this.context = context;
 
         LinearLayout linearLayout = context.findViewById(R.id.linearLayoutMain);

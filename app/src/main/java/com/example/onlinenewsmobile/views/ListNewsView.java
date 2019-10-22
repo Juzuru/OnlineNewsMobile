@@ -22,7 +22,7 @@ public class ListNewsView extends ListView {
     public ListNewsView(AppCompatActivity context, @NonNull ArrayList<NewsDTO> list, String color) {
         super(context);
         this.list = list;
-        adapter = new NewsCustomArrayAdapter(context, R.layout.news_item_large, R.layout.news_item_small, this.list, color);
+        adapter = new NewsCustomArrayAdapter(context, R.layout.news_item_large, R.layout.news_item_small, this.list);
         this.setAdapter(adapter);
         this.setId(R.id.list_view_news);
         this.setBackgroundColor(Color.parseColor(color));

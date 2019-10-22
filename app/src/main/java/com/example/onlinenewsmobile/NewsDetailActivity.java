@@ -30,9 +30,9 @@ public class NewsDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news_detail);
 
         Intent intent = getIntent();
-        ((TextView) findViewById(R.id.textViewCategory)).setText(intent.getStringExtra("newTypeName"));
+        ((TextView) findViewById(R.id.textViewCategory)).setText(intent.getStringExtra("categoryName"));
         container = findViewById(R.id.linearNewsContainer);
-        new NewsReader().execute("24h", intent.getStringExtra("link"));
+        new NewsReader().execute(intent.getStringExtra("newspaper"), intent.getStringExtra("link"));
     }
 
     private void addContent(String content, float size) {
@@ -73,11 +73,13 @@ public class NewsDetailActivity extends AppCompatActivity {
 
         @Override
         protected ArrayList<Object> doInBackground(String... strings) {
+            NewsService newsService = new NewsService();
             try {
                 switch (strings[0]) {
                     case "24h":
-                        NewsService newsService = new NewsService();
                         return newsService.read24h(DocumentService.parseHtml(strings[1]));
+                    case "Dân Trí":
+                        return newsService.readDanTri((DocumentService.parseHtml(strings[1])));
                 }
 
             } catch (IOException e) {

@@ -28,6 +28,7 @@ public class MenuActivity extends AppCompatActivity {
     private static final int SETTING_CHANGED = 210;
     private static final int LOGIN_SUCCESS = 200;
     private static final int LOGIN_FAIL = 400;
+    private static final int SETTING_NOT_CHANGED = 310;
 
     private boolean isLightModel;
     private boolean isVertical;
@@ -109,6 +110,8 @@ public class MenuActivity extends AppCompatActivity {
         } else if (resultCode == SETTING_CHANGED) {
             getIntent().putExtra("category", true);
             getIntent().putExtra("activeCategories", data.getIntExtra("activeCategories", 0));
+        } else if (resultCode == SETTING_NOT_CHANGED) {
+
         } else {
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }

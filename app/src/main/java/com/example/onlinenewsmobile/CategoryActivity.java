@@ -11,11 +11,17 @@ import android.widget.ListView;
 
 import com.example.onlinenewsmobile.adapters.CategoryCustomAdapter;
 import com.example.onlinenewsmobile.daos.CategoryDAO;
+import com.example.onlinenewsmobile.daos.NewspaperDAO;
 import com.example.onlinenewsmobile.models.CategoryDTO;
+import com.example.onlinenewsmobile.models.NewspaperDTO;
+
+import java.util.ArrayList;
 
 public class CategoryActivity extends AppCompatActivity {
 
     private static final int SETTING_CHANGED = 210;
+    private static final int SETTING_NOT_CHANGED = 310;
+
     private boolean isChanged = false;
     private int activeCategories;
 
@@ -29,21 +35,37 @@ public class CategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
 
-        CategoryDAO dao = new CategoryDAO(this);
+        NewspaperDAO newspaperDAO = new NewspaperDAO(this);
+        CategoryDAO categoryDAO = new CategoryDAO(this);
+
+        ArrayList<NewspaperDTO> newspaperDTOS = newspaperDAO.getAll();
+        ArrayList<CategoryDTO> categoryDTOS = new ArrayList<>();
+        String categoryName;
+        int n = 0;
+        for (int i = 0; i < newspaperDTOS.size(); i++) {
+            categoryDTOS.addAll(categoryDAO.getByNewspaperId(newspaperDTOS.get(i).getId()));
+            for (int j = n; j < categoryDTOS.size(); j++) {
+                categoryName = categoryDTOS.get(j).getName();
+                categoryDTOS.get(j).setName(newspaperDTOS.get(i).getName() + " - " + categoryName);
+            }
+            n = categoryDTOS.size();
+        }
 
         buttonSave = findViewById(R.id.btSave);
         listView = findViewById(R.id.listView);
-        adapter = new CategoryCustomAdapter(this, R.layout.category_item, dao.getAll(), buttonSave);
+        adapter = new CategoryCustomAdapter(this, R.layout.category_item, categoryDTOS, buttonSave);
         listView.setAdapter(adapter);
     }
 
     @Override
     public void onBackPressed() {
+        Intent intent = getIntent();
         if (isChanged) {
-            Intent intent = getIntent();
             intent.putExtra("category", true);
             intent.putExtra("activeCategories", activeCategories);
             setResult(SETTING_CHANGED, intent);
+        } else {
+            setResult(SETTING_NOT_CHANGED, intent);
         }
         finish();
     }

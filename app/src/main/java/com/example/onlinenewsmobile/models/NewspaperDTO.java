@@ -6,6 +6,7 @@ public class NewspaperDTO implements Serializable {
     private int id;
     private String name;
     private String imageBase64;
+    private int serverID;
 
     public String getName() {
         return name;
@@ -29,5 +30,13 @@ public class NewspaperDTO implements Serializable {
 
     public void setImageBase64(String imageBase64) {
         this.imageBase64 = imageBase64;
+    }
+
+    public int getServerID() {
+        return serverID;
+    }
+
+    public void setServerID(int serverID) {
+        this.serverID = serverID;
     }
 }

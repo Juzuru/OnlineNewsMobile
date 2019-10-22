@@ -54,7 +54,46 @@ public class NewsService {
         return content;
     }
 
+    public ArrayList<Object> readDanTri(Document document) {
+        Elements section = document.getElementsByClass("ctl00_IDContent_Tin_Chi_Tiet");
+
+        ArrayList<Object> content = new ArrayList<>();
+        Element element = section.get(0).child(0).child(0);
+
+        //Time
+        content.add("<tim>" + eliminateDoubleQuote(element.child(1).ownText()));
+
+        //Tttle
+        element = element.nextElementSibling();
+        content.add("<hea>" + eliminateDoubleQuote(element.ownText()));
+
+        //Desctiption;
+        element = element.nextElementSibling().nextElementSibling().nextElementSibling();
+        content.add("<des>" + eliminateDoubleQuote(element.ownText()));
+
+        //content
+        element = element.nextElementSibling().nextElementSibling().child(0);
+        do {
+            if (element.getElementsByTag("strong").size() > 0) {
+                content.add("<str>" + eliminateDoubleQuote(element.ownText()));
+            } else {
+                Elements eles = element.getElementsByTag("img");
+                if (eles .size() > 0) {
+                    content.add(HttpRequestService.getImageBitmap(eles.get(0).attr("src")));
+                } else {
+                    content.add(eliminateDoubleQuote(element.ownText()));
+                }
+            }
+            element = element.nextElementSibling();
+        } while (!element.attr("class").equals("news-tag"));
+        content.add(content.size() - 1, "<aut>" + content.get(content.size() - 1));
+        content.add("<aut>Theo Dân Trí");
+
+        return content;
+    }
+
     private String eliminateDoubleQuote(String s) {
+        s = s.trim();
         if (s.startsWith("\"")) {
             s.substring(1);
         }
@@ -64,4 +103,6 @@ public class NewsService {
 
         return s;
     }
+
+
 }

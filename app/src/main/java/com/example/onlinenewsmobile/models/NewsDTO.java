@@ -5,10 +5,10 @@ import android.graphics.Bitmap;
 import java.io.Serializable;
 
 public class NewsDTO implements Serializable {
-    private String title;
-    private String description;
-    private String link;
-    private String imageLink;
+    private String title = "";
+    private String description = "";
+    private String link = "";
+    private String imageLink = "";
     private Bitmap imageBitmap;
     private int categoryId;
     private String categoryName;
