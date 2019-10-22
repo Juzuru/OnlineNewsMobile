@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.concurrent.ExecutionException;
 
 public class HttpRequestService {
@@ -59,7 +60,9 @@ public class HttpRequestService {
         InputStream is = null;
 
         try {
-            is = new URL(url).openConnection().getInputStream();
+            URLConnection connection  = new URL(url).openConnection();
+            connection.setConnectTimeout(5000);
+            is = connection.getInputStream();
 
             return BitmapFactory.decodeStream(is);
         } catch (NetworkOnMainThreadException e) {
@@ -180,6 +183,7 @@ public class HttpRequestService {
                 sb.append(line);
             }
             br.close();
+            return sb.toString();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

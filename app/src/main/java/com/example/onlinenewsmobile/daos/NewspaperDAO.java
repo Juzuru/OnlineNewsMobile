@@ -20,23 +20,28 @@ public class NewspaperDAO implements Serializable {
 
     public ArrayList<NewspaperDTO> getAll() {
         ArrayList<NewspaperDTO> list = new ArrayList<>();
-
         SQLiteDatabase db = dbManager.getReadableDatabase();
-        String sql = "SELECT * FROM " + DBManager.CATEGORY_TABLE_NAME;
-        Cursor cursor = db.rawQuery(sql, null);
 
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                NewspaperDTO newspaperDTO;
-                do {
-                    newspaperDTO = new NewspaperDTO();
-                    newspaperDTO.setId(cursor.getInt(0));
-                    newspaperDTO.setName(cursor.getString(1));
-                    newspaperDTO.setImageBase64(cursor.getString(2));
+        try {
+            String sql = "SELECT * FROM " + DBManager.NEWSPAPER_TABLE_NAME;
+            Cursor cursor = db.rawQuery(sql, null);
 
-                    list.add(newspaperDTO);
-                } while (cursor.moveToNext());
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
+                    NewspaperDTO newspaperDTO;
+                    do {
+                        newspaperDTO = new NewspaperDTO();
+                        newspaperDTO.setId(cursor.getInt(0));
+                        newspaperDTO.setName(cursor.getString(1));
+                        newspaperDTO.setServerID(cursor.getInt(2));
+                        newspaperDTO.setImageBase64(cursor.getString(3));
+
+                        list.add(newspaperDTO);
+                    } while (cursor.moveToNext());
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         db.close();
@@ -66,27 +71,18 @@ public class NewspaperDAO implements Serializable {
 
     public void create(NewspaperDTO newspaperDTO) {
         SQLiteDatabase db = dbManager.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(DBManager.NEWSPAPER_NAME, newspaperDTO.getName());
-        values.put(DBManager.NEWSPAPER_IMAGE_BASE64, newspaperDTO.getImageBase64());
 
-        db.insert(DBManager.NEWSPAPER_TABLE_NAME, null, values);
+        try {
+            ContentValues values = new ContentValues();
+            values.put(DBManager.NEWSPAPER_NAME, newspaperDTO.getName());
+            values.put(DBManager.NEWSPAPER_SERVER_ID, newspaperDTO.getServerID());
+            values.put(DBManager.NEWSPAPER_IMAGE_BASE64, newspaperDTO.getImageBase64());
+
+            db.insert(DBManager.NEWSPAPER_TABLE_NAME, null, values);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         db.close();
-    }
-
-    public ArrayList<NewspaperDTO> seed() {
-        ArrayList<NewspaperDTO> newspapers = new ArrayList<>();
-
-        NewspaperDTO newspaperDTO = new NewspaperDTO();
-        newspaperDTO.setName("24h");
-        newspaperDTO.setImageBase64("");
-        newspapers.add(newspaperDTO);
-
-        newspaperDTO = new NewspaperDTO();
-        newspaperDTO.setName("Dan tri");
-        newspaperDTO.setImageBase64("");
-        newspapers.add(newspaperDTO);
-
-        return newspapers;
     }
 }

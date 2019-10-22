@@ -21,9 +21,9 @@ public class ViewPagerAdapter extends PagerAdapter {
         listViewNews = new ListNewsView[numberOfPage];
         String[] colors = context.getResources().getStringArray(R.array.color_hex_code);
 
-        for (int i = 0, j = 0; i < colors.length && j < numberOfPage; i++, j++) {
-            listViewNews[i] = new ListNewsView(context, new ArrayList<NewsDTO>(0), colors[i]);
-            if (j == colors.length - 1) i = -1;
+        for (int i = 0, j = 0; i < numberOfPage; i++, j++) {
+            listViewNews[i] = new ListNewsView(context, new ArrayList<NewsDTO>(0), colors[j]);
+            if (j == colors.length - 1) j = -1;
         }
     }
 
@@ -53,10 +53,6 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     }
 
-    public void addNews(ArrayList<NewsDTO> list, int position){
-        listViewNews[position].addNews(list);
-    }
-
     public void addNews(CategoryDTO categoryDTO, int position) {
         listViewNews[position].addNews(categoryDTO);
     }
@@ -73,7 +69,11 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     public void setOrientation(boolean orientation) {
         for (int i = 0; i < listViewNews.length; i++) {
-            listViewNews[i].setOrientation(orientation);
+            try {
+                listViewNews[i].setOrientation(orientation);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
