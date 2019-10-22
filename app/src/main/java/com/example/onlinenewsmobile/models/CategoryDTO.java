@@ -7,11 +7,9 @@ public class CategoryDTO implements Serializable {
     private String name;
     private boolean visible;
 
-    public CategoryDTO(int id, String name, boolean visible) {
-        this.id = id;
-        this.name = name;
-        this.visible = visible;
-    }
+    private int newspaperId;
+    private String newspaper;
+    private String rssLink;
 
     public boolean isVisible() {
         return visible;
@@ -35,5 +33,29 @@ public class CategoryDTO implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getNewspaper() {
+        return newspaper;
+    }
+
+    public void setNewspaper(String newspaper) {
+        this.newspaper = newspaper;
+    }
+
+    public String getRssLink() {
+        return rssLink;
+    }
+
+    public void setRssLink(String rssLink) {
+        this.rssLink = rssLink;
+    }
+
+    public int getNewspaperId() {
+        return newspaperId;
+    }
+
+    public void setNewspaperId(int newspaperId) {
+        this.newspaperId = newspaperId;
     }
 }

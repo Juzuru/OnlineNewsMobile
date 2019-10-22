@@ -3,8 +3,8 @@ package com.example.onlinenewsmobile.services;
 import android.os.AsyncTask;
 
 import com.example.onlinenewsmobile.adapters.NewsCustomArrayAdapter;
+import com.example.onlinenewsmobile.models.CategoryDTO;
 import com.example.onlinenewsmobile.models.NewsDTO;
-import com.example.onlinenewsmobile.models.NewsTypeDTO;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -13,11 +13,11 @@ import org.w3c.dom.NodeList;
 import java.util.ArrayList;
 
 public class RssService {
-    private NewsTypeDTO newsTypeDTO;
+    private CategoryDTO categoryDTO;
 
-    public void addNews(NewsCustomArrayAdapter newsCustomArrayAdapter, NewsTypeDTO newsTypeDTO) {
-        this.newsTypeDTO = newsTypeDTO;
-        new RssReader(newsCustomArrayAdapter).execute(newsTypeDTO.getRssLink());
+    public void addNews(NewsCustomArrayAdapter newsCustomArrayAdapter, CategoryDTO categoryDTO) {
+        this.categoryDTO = categoryDTO;
+        new RssReader(newsCustomArrayAdapter).execute(categoryDTO.getRssLink());
     }
 
     private class RssReader extends AsyncTask<String, Void, Void> {
@@ -122,8 +122,8 @@ public class RssService {
                     }
                 }
 
-                dto.setNewsType(newsTypeDTO.getName());
-                dto.setNewspaper(newsTypeDTO.getNewspaper());
+                dto.setCategoryName(categoryDTO.getName());
+                dto.setNewspaper(categoryDTO.getNewspaper());
 
                 list.add(dto);
             }

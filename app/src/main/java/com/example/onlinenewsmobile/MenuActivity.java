@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.onlinenewsmobile.services.ConverterService;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -53,9 +54,7 @@ public class MenuActivity extends AppCompatActivity {
     private void loadFacebookUser() {
         ((TextView) findViewById(R.id.textViewFBName)).setText(faceBookName);
         try {
-            byte[] encodeByte = Base64.decode(facebookImageBase64, Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0,
-                    encodeByte.length);
+            Bitmap bitmap = new ConverterService().fromStringToBitmap(facebookImageBase64);
             ((ImageView) findViewById(R.id.imageViewFBPhoto)).setImageBitmap(bitmap);
         } catch (Exception e) {
             e.getMessage();

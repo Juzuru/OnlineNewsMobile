@@ -13,6 +13,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".views.recent.RecentActivity"></activity>
+        <activity android:name=".NewspaperActivity"></activity>
         <activity android:name=".NewsDetailActivity" />
         <activity
             android:name=".views.search.SearchNewsActivity"

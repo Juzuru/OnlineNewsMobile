@@ -15,7 +15,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="200dp"
-            android:src="@drawable/open_book_icon"
+            android:src="@drawable/facebook_icon"
             android:layout_gravity="center"
             android:id="@+id/faceBookImage"/>
     </LinearLayout>
